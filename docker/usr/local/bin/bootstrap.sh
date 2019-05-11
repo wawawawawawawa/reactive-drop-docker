@@ -12,12 +12,13 @@ IP=$(wget -q -O- "https://api.ipify.org/")
 export DISPLAY=":0"
 export WINEARCH="win32"
 export WINEDEBUG="-all"
+export WINEPREFIX="/root/prefix-rd"
 
 # switch to reactive drop folder
 cd /root/.steam/SteamApps/common/Alien\ Swarm\ Reactive\ Drop/
 
 # start srcds
-winedbg --command "quit"  \
+wineconsole \
         srcds.exe \
         -console \
         -game reactivedrop \

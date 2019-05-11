@@ -28,14 +28,15 @@ RUN ln -s /root/.steam/SteamApps/common/Alien\ Swarm\ Reactive\ Drop /root/react
 RUN apt-get -y install winetricks software-properties-common
 
 # get gpg key
-RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key && apt-key add winehq.key
+RUN wget -q -O- https://dl.winehq.org/wine-builds/winehq.key | apt-key add -
+RUN apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
 RUN apt update
 
 # upgrade wine
 RUN apt install -y --install-recommends winehq-stable
 
 # set to a specific directx mode
-RUN winetricks -q win7 corefonts vcrun6 dotnet45
+RUN winetricks -q win7 corefonts dotnet45
 
 # cleanup
 RUN apt-get -qq -y autoremove \
@@ -46,3 +47,7 @@ RUN apt-get -qq -y autoremove \
 
 # copy files
 COPY /docker /
+
+# overwrite screen resolution to fix a steam issue
+RUN sed -i'' 's/1024x768x24/1400x900x16/g' /etc/supervisor/conf.d/supervisor.conf
+
