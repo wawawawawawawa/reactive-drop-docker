@@ -26,5 +26,8 @@ RUN /usr/games/steamcmd \
     +app_update 563560 \
     +quit
 
+# link reactive drop for easier usage within scripts
+RUN ln -s /root/.steam/SteamApps/common/Alien\ Swarm\ Reactive\ Drop /root/reactivedrop
+
 # copy files
-COPY /docker
+COPY /docker /
