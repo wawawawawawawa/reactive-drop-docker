@@ -24,8 +24,18 @@ RUN /usr/games/steamcmd \
 # link reactive drop for easier usage within scripts
 RUN ln -s /root/.steam/SteamApps/common/Alien\ Swarm\ Reactive\ Drop /root/reactivedrop
 
-# install wine32
-RUN apt-get -y install wine32
+# install winetricks
+RUN apt-get -y install winetricks software-properties-common
+
+# get gpg key
+RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key && apt-key add winehq.key
+RUN apt update
+
+# upgrade wine
+RUN apt install -y --install-recommends winehq-stable
+
+# set to a specific directx mode
+RUN winetricks -q win7 corefonts vcrun6 dotnet45
 
 # cleanup
 RUN apt-get -qq -y autoremove \

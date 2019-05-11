@@ -8,7 +8,8 @@ services:
     volumes:
       - "./docker/usr/local/bin:/usr/local/bin"
     ports:
-    - "28001:28001"
+      - "8080:8080"
+      - "28001:28001"
     networks:
       - network
 
