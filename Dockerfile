@@ -59,6 +59,7 @@ RUN apt install -y --install-recommends winehq-stable:i386
 COPY /docker /
 
 # link server files
-RUN cd /root/reactivedrop/reactivedrop/cfg && rm -rf server.cfg newmapsettings.cfg
-RUN ln -sf /etc/reactivedrop/cfg/server.cfg .
-RUN ln -sf /etc/reactivedrop/cfg/newmapsettings.cfg .
+RUN cd /root/reactivedrop/reactivedrop/cfg \
+    && rm -rf server.cfg newmapsettings.cfg \
+    && ln -sf /etc/reactivedrop/cfg/server.cfg . \
+    && ln -sf /etc/reactivedrop/cfg/newmapsettings.cfg .
