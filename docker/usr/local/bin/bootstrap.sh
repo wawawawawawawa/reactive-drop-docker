@@ -5,30 +5,27 @@ set -ex
 MAXPLAYERS=8
 PORT="${1:-27015}"
 
-# get the exernal ip address
-IP=$(wget -q -O- "https://api.ipify.org/")
+# get the ip address
+#IP=$(wget -q -O- "https://api.ipify.org/")
+IP=$(ifconfig | grep inet  | grep -v 127.0.0.1 | head -n 1  | awk '{ print $2; }')
+IP="127.0.0.1"
 
 # gui/console
-export DISPLAY=":0"
+export DISPLAY=:0
 export WINEARCH="win32"
-export WINEDEBUG="-all"
-export WINEPREFIX="/root/prefix-rd"
+export WINEDEBUG="-ALL"
+export WINEDLLOVERRIDES="mscoree=d;mshtml=d"
 
 # switch to reactive drop folder
-cd /root/.steam/SteamApps/common/Alien\ Swarm\ Reactive\ Drop/
+cd /root/reactivedrop/
 
 # start srcds
-wineconsole \
-        srcds.exe \
-        -console \
+winedbg --command "quit" \
+        ./srcds.exe \
         -game reactivedrop \
-        +sv_lan 0 \
-        +map lobby \
+        -console \
         -ip $IP \
         -port $PORT \
-        -nomessagebox \
         -maxplayers $MAXPLAYERS \
-        -nocrashdialog \
-        -num_edicts 4096 \
         -threads 1 \
         +exec server.cfg
