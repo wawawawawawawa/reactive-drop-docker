@@ -54,4 +54,4 @@ RUN apt install -y --install-recommends winehq-stable:i386
 # copy files
 COPY ./etc/ /etc/
 COPY ./bin/ /usr/local/bin/
-COPY ./reactivedrop/ /root/reactivedrop/
+COPY ./reactivedrop/ /root/reactivedrop/reactivedrop/
