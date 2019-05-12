@@ -61,8 +61,10 @@ while [[ true ]]; do
                 -ip $ip \
                 -port $port \
                 -threads 1 \
+                -nomessagebox \
+            	-nocrashdialog \
+                -num_edicts 4096 \
                 +exec $config
-
          fi
     done
 

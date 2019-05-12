@@ -44,6 +44,17 @@ RUN dpkg -i libfaudio*.deb
 RUN rm -f libfaudio*.deb
 RUN apt install -y --install-recommends winehq-stable:i386
 
+# metamod
+RUN wget https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git970-windows.zip -O /tmp/metamod.zip \
+    && cd /root/reactivedrop/reactivedrop \
+    && unzip -x /tmp/metamod.zip \
+    && rm -f /tmp/metamod.zip
+
+# sourcemod
+RUN wget https://sm.alliedmods.net/smdrop/1.9/sourcemod-1.9.0-git6280-windows.zip -O /tmp/sourcemod.zip \
+    && cd /root/reactivedrop/reactivedrop \
+    && unzip -x /tmp/sourcemod.zip
+
 # TODO: cleanup, enable after we are finished
 #RUN apt-get -qq -y autoremove \
 #    && apt-get -qq -y clean \
