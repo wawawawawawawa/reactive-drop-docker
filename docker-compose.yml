@@ -10,7 +10,13 @@ services:
       - "./docker/usr/local/bin:/usr/local/bin"
     ports:
       - "8080:8080"
-      - "27015:27015"
+      - "28001:28001"
+      - "28002:28002"
+    environment:
+      - "rd_server_1_port=28001"
+      - "rd_server_1_hostname=Gandalf's Tower - First Floor"
+      - "rd_server_2_port=28002"
+      - "rd_server_2_hostname=Gandalf's Tower - Second Floor"
     networks:
       - network
 

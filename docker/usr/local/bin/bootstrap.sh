@@ -1,14 +1,9 @@
 #!/bin/bash
 set
 
-# vars
-MAXPLAYERS=8
-PORT="${1:-27015}"
-
 # get the ip address
-#IP=$(wget -q -O- "https://api.ipify.org/")
-IP=$(ifconfig | grep inet  | grep -v 127.0.0.1 | head -n 1  | awk '{ print $2; }')
-#IP="127.0.0.1"
+ip=$(wget -q -O- "https://api.ipify.org/")
+#ip="127.0.0.1"
 
 # gui/console
 export DISPLAY=:0
@@ -23,20 +18,53 @@ export WINEDLLOVERRIDES="mscoree=d;mshtml=d"
 # switch to reactive drop folder
 cd /root/reactivedrop/
 
-# start srcds
-#winedbg --command "quit" \
-wine start \
-        ./srcds.exe \
-        -console \
-        -game reactivedrop \
-        +ip $IP \
-        -port $PORT \
-        -maxplayers $MAXPLAYERS \
-        -threads 1 \
-        +exec server.cfg
+# set ifs
+IFS=$'\n'
 
-running="-1"
-while [[ "$running" != "" ]]; do
-    sleep 5
-    running=$(pidof wineserver)
+# get defined servers
+servers=$(set | grep "^rd\_server\_[0-9]\{1,\}\_port=[0-9]\{4,5\}$")
+
+# loop
+while [[ true ]]; do
+
+    # iterate
+    for server in $servers; do
+
+        # get server number
+        nr=$(echo "${server}" | cut -d '_' -f 3)
+        port=$(echo "${server}" | cut -d '=' -f 2-)
+
+        # check if the server is running already
+        running=$(pgrep -f "${port}")
+
+        if [[ "$running" = "" ]]; then
+
+            # write a configuration file for this server
+            config="server_${nr}.cfg"
+            file="/root/reactivedrop/reactivedrop/cfg/${config}"
+
+            echo "exec server.cfg" > $file
+
+            # look for other settings for this server
+            for vars in $(set | grep "^rd\_server\_${nr}\_"); do
+                var=$(echo "${vars}" | cut -d '_' -f 4- | cut -d '=' -f 1)
+                value=$(echo "${vars}" | cut -d '=' -f 2- | sed "s/\\\\'/\#/g" | sed "s/'//g" | sed "s/#/'/g")
+
+                echo "${var} = ${value}" >> $file
+            done
+
+            # check if the env does exist
+            wine start \
+                ./srcds.exe \
+                -console \
+                -game reactivedrop \
+                -ip $ip \
+                -port $port \
+                -threads 1 \
+                +exec $config
+
+         fi
+    done
+
+    sleep 10
 done

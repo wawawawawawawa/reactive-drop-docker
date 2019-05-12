@@ -24,10 +24,8 @@ RUN /usr/games/steamcmd \
 # link reactive drop for easier usage within scripts
 RUN ln -s /root/.steam/SteamApps/common/Alien\ Swarm\ Reactive\ Drop /root/reactivedrop
 
-# install winetricks
-RUN apt-get -y install vim less aptitude
-#RUN apt-get -y install winetricks
-RUN apt-get -y install software-properties-common
+# install needed utilities
+RUN apt-get -y install vim less aptitude procps software-properties-common
 
 # get gpg key
 RUN wget -q -O- https://dl.winehq.org/wine-builds/winehq.key | apt-key add -
@@ -43,12 +41,10 @@ RUN apt -y install libsdl2-2.0-0 libsdl2-2.0-0:i386
 RUN wget https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Ubuntu_18.10_standard/i386/libfaudio0_19.05-0~cosmic_i386.deb
 RUN wget https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Ubuntu_18.10_standard/amd64/libfaudio0_19.05-0~cosmic_amd64.deb
 RUN dpkg -i libfaudio*.deb
+RUN rm -f libfaudio*.deb
 RUN apt install -y --install-recommends winehq-stable:i386
 
-# set to a specific directx mode
-#RUN winetricks -q win7 corefonts
-
-# cleanup
+# TODO: cleanup, enable after we are finished
 #RUN apt-get -qq -y autoremove \
 #    && apt-get -qq -y clean \
 #    && apt-get -qq -y autoclean \
