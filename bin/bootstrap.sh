@@ -58,7 +58,6 @@ while [[ true ]]; do
                 ./srcds.exe \
                 -console \
                 -game reactivedrop \
-                -ip $ip \
                 -port $port \
                 -threads 1 \
                 -nomessagebox \
