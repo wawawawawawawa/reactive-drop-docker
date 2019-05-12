@@ -6,8 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - "./docker/etc/reactivedrop:/etc/reactivedrop"
-      - "./docker/usr/local/bin:/usr/local/bin"
+      - "./bin:/usr/local/bin"
     ports:
       - "8080:8080"
       - "28001:28001"

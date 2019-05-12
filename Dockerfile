@@ -25,7 +25,7 @@ RUN /usr/games/steamcmd \
 RUN ln -s /root/.steam/SteamApps/common/Alien\ Swarm\ Reactive\ Drop /root/reactivedrop
 
 # install needed utilities
-RUN apt-get -y install vim less aptitude procps software-properties-common
+RUN apt-get -y install vim less aptitude procps unzip software-properties-common
 
 # get gpg key
 RUN wget -q -O- https://dl.winehq.org/wine-builds/winehq.key | apt-key add -
@@ -52,10 +52,6 @@ RUN apt install -y --install-recommends winehq-stable:i386
 #    && unset PACKAGES
 
 # copy files
-COPY /docker /
-
-# link server files
-RUN cd /root/reactivedrop/reactivedrop/cfg \
-    && rm -rf server.cfg newmapsettings.cfg \
-    && ln -sf /etc/reactivedrop/cfg/server.cfg . \
-    && ln -sf /etc/reactivedrop/cfg/newmapsettings.cfg .
+COPY ./etc/ /etc/
+COPY ./bin/ /usr/local/bin/
+COPY ./reactivedrop/ /root/reactivedrop/
