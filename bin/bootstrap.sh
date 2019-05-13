@@ -44,7 +44,7 @@ function write_server_config()
         value=$(echo "${vars}" | cut -d '=' -f 2- | sed "s/\\\\'/\#/g" | sed "s/'//g" | sed "s/#/'/g")
 
         # write the var the the server config file
-        echo "${var} = ${value}" >> $file
+        echo "${var} ${value}" >> $file
     done
 }
 
