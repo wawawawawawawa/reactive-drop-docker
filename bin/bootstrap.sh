@@ -121,7 +121,7 @@ while [[ true ]]; do
 
             # create a copy of the sourcemod folder
             smbase="addons/sourcemod_${nr}"
-            cp -a reactivedrop/addons/sourcemod $smbase
+            cp -a reactivedrop/addons/sourcemod reactivedrop/$smbase
 
             # sourcebans
             write_sourcebans_serverid "reactivedrop/${smbase}/configs/sourcebans/sourcebans.cfg" $nr

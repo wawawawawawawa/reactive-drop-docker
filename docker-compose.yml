@@ -5,8 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - "./bin:/usr/local/bin"
+#    volumes:
+#      - "./bin:/usr/local/bin"
     ports:
       - "8080:8080"
       - target: 28001
