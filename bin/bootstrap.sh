@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # run updates
 /usr/games/steamcmd \
     +@sSteamCmdForcePlatformType windows \
@@ -13,9 +14,9 @@ ip=$(wget -q -O- "https://api.ipify.org/")
 # gui/console
 export DISPLAY=:0
 export WINEARCH="win32"
-#export WINEDEBUG="+synchronous,+loaddll,+seh,+msgbox,+fixme"
 export WINEDEBUG="-all"
 export WINEDLLOVERRIDES="mscoree=d;mshtml=d"
+#export WINEDEBUG="+synchronous,+loaddll,+seh,+msgbox,+fixme"
 
 # run a persistent wine server during initialization
 /usr/bin/wineserver -k -p 60
@@ -47,8 +48,9 @@ while [[ true ]]; do
             # write a configuration file for this server
             config="server_${nr}.cfg"
             console="console_${nr}.log"
-            file="/root/reactivedrop/reactivedrop/cfg/${config}"
+            file="reactivedrop/cfg/${config}"
 
+            # load the server.cfg file
             echo "exec server.cfg" > $file
 
             # look for other settings for this server
@@ -56,8 +58,12 @@ while [[ true ]]; do
                 var=$(echo "${vars}" | cut -d '_' -f 4- | cut -d '=' -f 1)
                 value=$(echo "${vars}" | cut -d '=' -f 2- | sed "s/\\\\'/\#/g" | sed "s/'//g" | sed "s/#/'/g")
 
+                # write the var the the server config file
                 echo "${var} = ${value}" >> $file
             done
+
+            # create a copy of the sourcemod folder
+            cp -a reactivedrop/addons/sourcemod reactivedrop/addons/sourcemod_$i
 
             # check if the env does exist
             wine start \
@@ -71,6 +77,7 @@ while [[ true ]]; do
                 -num_edicts 4096 \
                 +con_logfile $console \
                 +exec $config
+                +sm_basepath addons/sourcemod_$i
          fi
     done
 
