@@ -70,6 +70,16 @@ function write_sourcemod_sourcebans_config()
     fi
 }
 
+function write_sourcebans_serverid()
+{
+    file=$1
+    nr=$2
+
+    id=$(set | grep "rd_sourcebans_${nr}_id")
+    if [[ "$id" != "" ]]; then
+        sed -i'' "s/\-1/${nr}/g" $file
+    fi
+}
 # run a persistent wine server during initialization
 /usr/bin/wineserver -k -p 60
 
@@ -110,6 +120,9 @@ while [[ true ]]; do
             # create a copy of the sourcemod folder
             smbase="reactivedrop/addons/sourcemod_${nr}"
             cp -a reactivedrop/addons/sourcemod $smbase
+
+            # sourcebans
+            write_sourcebans_serverid "${smbase}/configs/sourcebans/sourcebans.cfg" $nr
 
             # check if the env does exist
             echo "Starting server #${nr}"

@@ -55,6 +55,12 @@ RUN wget https://sm.alliedmods.net/smdrop/1.9/sourcemod-1.9.0-git6280-windows.zi
     && cd /root/reactivedrop/reactivedrop \
     && unzip -x /tmp/sourcemod.zip
 
+# sourcebans
+RUN wget https://github.com/sbpp/sourcebans-pp/releases/download/1.6.3/sourcebans-pp-1.6.3.plugin-only.zip -O /tmp/sourcebans.zip \
+    && cd /tmp \
+    && unzip -x /tmp/sourcebans.zip \
+    && cp -a /tmp/sourcebans-pp-1.6.3.plugin-only/addons /root/reactivedrop/reactivedrop/
+
 # TODO: cleanup, enable after we are finished
 #RUN apt-get -qq -y autoremove \
 #    && apt-get -qq -y clean \

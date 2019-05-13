@@ -14,8 +14,10 @@ services:
     environment:
       - "rd_server_1_port=28001"
       - "rd_server_1_hostname=Gandalf's Tower - First Floor"
+      - "rd_sourcebans_1_id=1"
       - "rd_server_2_port=28002"
       - "rd_server_2_hostname=Gandalf's Tower - Second Floor"
+      - "rd_sourcebans_2_id=2"
       - "sourcemod_admin_steamid=12345"
       - "sourcebans_host=127.0.0.1"
       - "sourcebans_port=3306"
