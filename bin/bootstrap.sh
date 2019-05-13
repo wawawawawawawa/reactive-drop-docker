@@ -19,8 +19,10 @@ echo '**************************************************************************
     +quit
 
 # get the ip address
-ip=$(wget -q -O- "https://api.ipify.org/")
-#ip="127.0.0.1"
+#ip=$(wget -q -O- "https://api.ipify.org/")
+
+# bind to the internal container id
+ip=$(ifconfig | grep 'inet ' | grep -v '127.0.0.1' | cut -d ' ' -f 2 | head -n 1)
 
 # gui/console
 export DISPLAY=:0
@@ -138,7 +140,8 @@ while [[ true ]]; do
                 -num_edicts 4096 \
                 +con_logfile $console \
                 +exec $config \
-                +sm_basepath $smbase
+                +sm_basepath $smbase \
+                +ip "${ip}"
 
             # wait a bit before attempting to start the next server
             sleep $SLEEP_TIME
