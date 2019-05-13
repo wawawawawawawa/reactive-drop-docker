@@ -16,6 +16,12 @@ services:
       - "rd_server_1_hostname=Gandalf's Tower - First Floor"
       - "rd_server_2_port=28002"
       - "rd_server_2_hostname=Gandalf's Tower - Second Floor"
+      - "sourcemod_admin_steamid=12345"
+      - "sourcebans_host=127.0.0.1"
+      - "sourcebans_port=3306"
+      - "sourcebans_user=myuser"
+      - "sourcebans_password=mysecret"
+      - "sourcebans_database=sourcebans"
     networks:
       - network
 
