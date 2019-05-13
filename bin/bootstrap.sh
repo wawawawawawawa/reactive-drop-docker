@@ -120,11 +120,11 @@ while [[ true ]]; do
             write_sourcemod_sourcebans_config
 
             # create a copy of the sourcemod folder
-            smbase="reactivedrop/addons/sourcemod_${nr}"
+            smbase="addons/sourcemod_${nr}"
             cp -a reactivedrop/addons/sourcemod $smbase
 
             # sourcebans
-            write_sourcebans_serverid "${smbase}/configs/sourcebans/sourcebans.cfg" $nr
+            write_sourcebans_serverid "reactivedrop/${smbase}/configs/sourcebans/sourcebans.cfg" $nr
 
             # check if the env does exist
             echo "Starting server #${nr}"
