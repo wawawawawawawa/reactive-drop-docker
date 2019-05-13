@@ -8,9 +8,18 @@ services:
     volumes:
       - "./bin:/usr/local/bin"
     ports:
-      - "8080:8080"
-      - "28001:28001"
-      - "28002:28002"
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: host
+      - target: 28001
+        published: 28001
+        protocol: tcp
+        mode: host
+      - target: 28002
+        published: 28002
+        protocol: tcp
+        mode: host
     environment:
       - "rd_server_1_port=28001"
       - "rd_server_1_hostname=Gandalf's Tower - First Floor"
