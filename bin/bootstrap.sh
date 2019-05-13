@@ -1,5 +1,10 @@
 #!/bin/bash
-set
+# run updates
+/usr/games/steamcmd \
+    +@sSteamCmdForcePlatformType windows \
+    +login anonymous \
+    +app_update 563560 \
+    +quit
 
 # get the ip address
 ip=$(wget -q -O- "https://api.ipify.org/")
@@ -41,6 +46,7 @@ while [[ true ]]; do
 
             # write a configuration file for this server
             config="server_${nr}.cfg"
+            console="console_${nr}.log"
             file="/root/reactivedrop/reactivedrop/cfg/${config}"
 
             echo "exec server.cfg" > $file
@@ -63,6 +69,7 @@ while [[ true ]]; do
                 -nomessagebox \
             	-nocrashdialog \
                 -num_edicts 4096 \
+                +con_logfile $console \
                 +exec $config
          fi
     done

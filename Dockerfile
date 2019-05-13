@@ -42,7 +42,7 @@ RUN wget https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Ubun
 RUN wget https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Ubuntu_18.10_standard/amd64/libfaudio0_19.05-0~cosmic_amd64.deb
 RUN dpkg -i libfaudio*.deb
 RUN rm -f libfaudio*.deb
-RUN apt install -y --install-recommends winehq-stable:i386
+RUN apt install -y --install-recommends winehq-staging:i386
 
 # metamod
 RUN wget https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git970-windows.zip -O /tmp/metamod.zip \
