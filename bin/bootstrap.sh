@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# vars
+SLEEP_TIME=10
+
 # run updates
 /usr/games/steamcmd \
     +@sSteamCmdForcePlatformType windows \
@@ -78,8 +81,11 @@ while [[ true ]]; do
                 +con_logfile $console \
                 +exec $config
                 +sm_basepath addons/sourcemod_$i
+
+            # wait a bit before attempting to start the next server
+            sleep $SLEEP_TIME
          fi
     done
 
-    sleep 10
+    sleep $SLEEP_TIME
 done
