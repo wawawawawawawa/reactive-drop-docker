@@ -1,12 +1,15 @@
 #!/bin/bash
 
+# vars
+SLEEP_TIME=2
+
+# wait for initialization
+sleep $SLEEP_TIME
+
 # line
 echo '******************************************************************************'
 echo '* Starting Reactive Drop server                                              *'
 echo '******************************************************************************'
-
-# vars
-SLEEP_TIME=10
 
 # run updates
 /usr/games/steamcmd \
@@ -45,15 +48,18 @@ function write_server_config()
 
 function write_sourcemod_admins_simple()
 {
+    file="reactivedrop/addons/sourcemod/configs/admins_simple.ini"
+
     if [[ "$sourcemod_admin_steamid" != "" ]]; then
-        echo "\"$sourcemod_admin_steamid\" \"z\"" > reactivedrop/addons/sourcemod/configs/admins_simple.ini
+        echo "\"$sourcemod_admin_steamid\" \"z\"" > $file
+        echo "" > $file
     fi
 
 }
 
 function write_sourcemod_sourcebans_config()
 {
-    file="addons/sourcemod/configs/databases.cfg"
+    file="reactivedrop/addons/sourcemod/configs/databases.cfg"
 
     if [[ "${sourcebans_host}" != "" ]]; then
         sed -i'' "s/#sourcebans_host#/${sourcebans_host}/g" $file
@@ -102,10 +108,12 @@ while [[ true ]]; do
             write_sourcemod_sourcebans_config
 
             # create a copy of the sourcemod folder
-            smbase="reactivedrop/addons/sourcemod_${i}"
+            smbase="reactivedrop/addons/sourcemod_${nr}"
             cp -a reactivedrop/addons/sourcemod $smbase
 
             # check if the env does exist
+            echo "Starting server #${nr}"
+
             wine start \
                 ./srcds.exe \
                 -console \
