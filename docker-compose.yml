@@ -20,7 +20,7 @@ services:
     environment:
       - "rd_server_1_port=28001"
       - "rd_server_1_hostname=My First Server"
-      - "rd_sourcebans_1_id=1"
+#      - "rd_sourcebans_1_id=1"
 #      - "rd_server_2_port=28002"
 #      - "rd_server_2_hostname=My Second Server"
 #      - "rd_sourcebans_2_id=2"
