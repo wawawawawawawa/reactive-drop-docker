@@ -45,18 +45,18 @@ RUN rm -f libfaudio*.deb
 RUN apt install -y --install-recommends winehq-staging:i386
 
 # metamod
-RUN wget https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git970-windows.zip -O /tmp/metamod.zip \
+RUN wget -q https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git970-windows.zip -O /tmp/metamod.zip \
     && cd /root/reactivedrop/reactivedrop \
     && unzip -x /tmp/metamod.zip \
     && rm -f /tmp/metamod.zip
 
 # sourcemod
-RUN wget https://sm.alliedmods.net/smdrop/1.9/sourcemod-1.9.0-git6280-windows.zip -O /tmp/sourcemod.zip \
+RUN wget -q https://sm.alliedmods.net/smdrop/1.9/sourcemod-1.9.0-git6280-windows.zip -O /tmp/sourcemod.zip \
     && cd /root/reactivedrop/reactivedrop \
     && unzip -x /tmp/sourcemod.zip
 
 # sourcebans
-RUN wget https://github.com/sbpp/sourcebans-pp/releases/download/1.6.3/sourcebans-pp-1.6.3.plugin-only.zip -O /tmp/sourcebans.zip \
+RUN wget -q https://github.com/sbpp/sourcebans-pp/releases/download/1.6.3/sourcebans-pp-1.6.3.plugin-only.zip -O /tmp/sourcebans.zip \
     && cd /tmp \
     && unzip -x /tmp/sourcebans.zip \
     && cp -a /tmp/sourcebans-pp-1.6.3.plugin-only/addons /root/reactivedrop/reactivedrop/
