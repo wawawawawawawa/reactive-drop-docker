@@ -62,11 +62,12 @@ RUN wget https://github.com/sbpp/sourcebans-pp/releases/download/1.6.3/sourceban
     && cp -a /tmp/sourcebans-pp-1.6.3.plugin-only/addons /root/reactivedrop/reactivedrop/
 
 # TODO: cleanup, enable after we are finished
-#RUN apt-get -qq -y autoremove \
-#    && apt-get -qq -y clean \
-#    && apt-get -qq -y autoclean \
-#    && find /var/lib/apt/lists -type f -delete \
-#    && unset PACKAGES
+RUN apt-get -qq -y autoremove \
+    && apt-get -qq -y clean \
+    && apt-get -qq -y autoclean \
+    && find /var/lib/apt/lists -type f -delete \
+    && unset PACKAGES \
+    && rm -f /tmp/*.zip
 
 # copy files
 COPY ./etc/ /etc/
