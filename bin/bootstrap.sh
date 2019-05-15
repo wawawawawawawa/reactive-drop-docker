@@ -11,12 +11,8 @@ echo '**************************************************************************
 echo '* Starting Reactive Drop server                                              *'
 echo '******************************************************************************'
 
-# switch to reactive drop folder
-cd /root/reactivedrop/
-
 # run updates
 /usr/games/steamcmd +runscript /usr/local/templates/install.server
-/usr/games/steamcmd +runscript /usr/local/templates/install.workshop
 
 # get the ip address
 #ip=$(wget -q -O- "https://api.ipify.org/")
@@ -83,23 +79,6 @@ function write_sourcebans_serverid()
     fi
 }
 
-function link_workshop_content()
-{
-    workshopdir="/root/.steam/SteamApps/workshop/content/563560"
-    addonfolder="/root/reactivedrop/reactivedrop/addons"
-
-    cd $workshopdir
-    for addon in $(find . -type f -name 'addon.vpk'); do
-
-        ident=$(basename $(dirname "${addon}"))
-        source="${workshopdir}/${addon}"
-        target="${addonfolder}/${ident}.vpk"
-
-        echo "linking ${source} > ${target}"
-        ln -sf $source $target
-    done
-}
-
 # run a persistent wine server during initialization
 /usr/bin/wineserver -k -p 60
 
@@ -107,10 +86,13 @@ function link_workshop_content()
 IFS=$'\n'
 
 # link workshop content
-link_workshop_content
+/usr/local/bin/link-workshop.sh
 
 # get defined servers
 servers=$(set | grep "^rd\_server\_[0-9]\{1,\}\_port=[0-9]\{4,5\}$")
+
+# switch to reactive drop folder
+cd /root/reactivedrop/
 
 # loop
 while [[ true ]]; do
