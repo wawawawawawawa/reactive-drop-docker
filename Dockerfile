@@ -71,6 +71,9 @@ RUN apt-get -qq -y autoremove \
     && unset PACKAGES \
     && rm -f /tmp/*.zip
 
+# remove nextmap, as it causes issues
+RUN rm -f /root/reactivedrop/reactivedrop/addons/sourcemod/plugins/nextmap.smx
+
 # copy files
 COPY etc/ /etc/
 COPY bin/ /usr/local/bin/
