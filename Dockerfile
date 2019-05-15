@@ -9,17 +9,15 @@ RUN apt-get update
 RUN apt-get -y install steamcmd
 
 # version tag
-ENV VERSION=2019051100
+ENV SERIAL=2019051500
 
 # run steam self-update
 RUN echo $VERSION > /opt/version
 
 # install the game
-RUN /usr/games/steamcmd \
-    +@sSteamCmdForcePlatformType windows \
-    +login anonymous \
-    +app_update 563560 \
-    +quit
+COPY templates /usr/local/templates
+RUN /usr/games/steamcmd +runscript /usr/local/templates/install.server
+RUN /usr/games/steamcmd +runscript /usr/local/templates/install.workshop
 
 # link reactive drop for easier usage within scripts
 RUN ln -s /root/.steam/SteamApps/common/Alien\ Swarm\ Reactive\ Drop /root/reactivedrop

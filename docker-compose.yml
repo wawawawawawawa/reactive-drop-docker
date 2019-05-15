@@ -30,6 +30,7 @@ services:
 #      - "sourcebans_user=myuser"
 #      - "sourcebans_password=mysecret"
 #      - "sourcebans_database=sourcebans"
+      - "srcds_params=-dev"
     networks:
       - network
 
