@@ -150,6 +150,7 @@ while [[ true ]]; do
                 +con_logfile $console \
                 +exec $config \
                 +sm_basepath $smbase \
+                +map lobby \
                 +ip "${ip}" ${srcds_params}
 
             # wait a bit before attempting to start the next server
