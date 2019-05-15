@@ -21,9 +21,6 @@ COPY templates /usr/local/templates
 # use a volume mount for steam
 VOLUME /root/.steam/
 
-# link reactive drop for easier usage within scripts
-RUN ln -s /root/.steam/SteamApps/common/Alien\ Swarm\ Reactive\ Drop /root/reactivedrop
-
 # install needed utilities
 RUN apt-get -y install vim less aptitude procps unzip software-properties-common
 
@@ -38,11 +35,15 @@ RUN apt update
 # upgrade wine
 RUN apt -y remove wine32
 RUN apt -y install libsdl2-2.0-0 libsdl2-2.0-0:i386
-RUN wget https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Ubuntu_18.10_standard/i386/libfaudio0_19.05-0~cosmic_i386.deb
-RUN wget https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Ubuntu_18.10_standard/amd64/libfaudio0_19.05-0~cosmic_amd64.deb
+RUN wget -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Ubuntu_18.10_standard/i386/libfaudio0_19.05-0~cosmic_i386.deb
+RUN wget -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Ubuntu_18.10_standard/amd64/libfaudio0_19.05-0~cosmic_amd64.deb
 RUN dpkg -i libfaudio*.deb
 RUN rm -f libfaudio*.deb
 RUN apt install -y --install-recommends winehq-staging:i386
+
+# link reactive drop for easier usage within scripts
+RUN mkdir -p /root/.steam/SteamApps/common/Alien\ Swarm\ Reactive\ Drop/reactivedrop
+RUN ln -s /root/.steam/SteamApps/common/Alien\ Swarm\ Reactive\ Drop /root/reactivedrop
 
 # metamod
 RUN wget -q https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git970-windows.zip -O /tmp/metamod.zip \
