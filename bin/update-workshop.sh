@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # vars
-SLEEP_TIME=60
+SLEEP_TIME=30
 
 # check if other processes are running
 running="-1"
