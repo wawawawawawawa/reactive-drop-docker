@@ -1,9 +1,28 @@
 #!/bin/bash
 
-# wait for server to have started before doing this
-sleep 120
+# vars
+SLEEP_TIME=10
+
+# check if other processes are running
+running="-1"
+
+while [[ "$running" != "" ]]; do
+    # wait for servers to be started
+    sleep $SLEEP_TIME
+
+    # detect if steamcmd is already running
+    running=$(pidof steamcmd)
+
+    if [[ "$running" != "" ]]; then
+        echo "Steam game installation is still running, waiting.."
+    fi
+done
 
 # update
+echo ''
+echo '******************************************************************************'
+echo ' * Downloading workshop contents in background..                             *'
+echo '******************************************************************************'
 /usr/games/steamcmd +runscript /usr/local/templates/install.workshop
 /usr/local/bin/link-workshop.sh
 

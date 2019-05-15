@@ -2,6 +2,7 @@
 @sSteamCmdForcePlatformType windows
 
 login anonymous
+force_install_dir /root/.steam/SteamApps/common/reactivedrop
 app_update 582400 verify
 
 quit

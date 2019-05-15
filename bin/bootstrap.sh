@@ -11,8 +11,17 @@ echo '**************************************************************************
 echo '* Starting Reactive Drop server                                              *'
 echo '******************************************************************************'
 
+# run steam self update
+/usr/games/steamcmd +runscript /usr/local/templates/steam.selfupdate
+
 # run updates
+echo '******************************************************************************'
+echo ' * Downloading game and updates. Take a coffee, this may take some time..    *'
+echo '******************************************************************************'
 /usr/games/steamcmd +runscript /usr/local/templates/install.server
+
+# copy over template
+cp -a /root/template/* /root/reactivedrop/
 
 # get the ip address
 #ip=$(wget -q -O- "https://api.ipify.org/")

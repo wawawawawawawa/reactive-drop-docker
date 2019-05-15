@@ -1,4 +1,3 @@
-@ShutdownOnFailedCommand 1
 @sSteamCmdForcePlatformType windows
 
 login anonymous
