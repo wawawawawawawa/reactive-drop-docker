@@ -2,6 +2,6 @@
 @sSteamCmdForcePlatformType windows
 
 login anonymous
-app_update 582400
+app_update 582400 verify
 
 quit

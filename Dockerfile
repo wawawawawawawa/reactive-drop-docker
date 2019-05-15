@@ -16,8 +16,10 @@ RUN echo $VERSION > /opt/version
 
 # install the game
 COPY templates /usr/local/templates
-RUN /usr/games/steamcmd +runscript /usr/local/templates/install.server
-RUN /usr/games/steamcmd +runscript /usr/local/templates/install.workshop
+#RUN /usr/games/steamcmd +runscript /usr/local/templates/install.server
+#RUN /usr/games/steamcmd +runscript /usr/local/templates/install.workshop
+# use a volume mount for steam
+VOLUME /root/.steam/
 
 # link reactive drop for easier usage within scripts
 RUN ln -s /root/.steam/SteamApps/common/Alien\ Swarm\ Reactive\ Drop /root/reactivedrop
