@@ -2,7 +2,11 @@ version: '3.7'
 
 services:
   swarm:
-    image: "mithrand0/reactive-drop-server"
+    build:
+      context: .
+      dockerfile: Dockerfile
+#    volumes:
+#      - "./bin:/usr/local/bin"
     ports:
       - "8080:8080"
       - target: 28001
