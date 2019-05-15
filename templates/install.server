@@ -1,0 +1,7 @@
+@ShutdownOnFailedCommand 1
+@sSteamCmdForcePlatformType windows
+
+login anonymous
+app_update 582400
+
+quit
