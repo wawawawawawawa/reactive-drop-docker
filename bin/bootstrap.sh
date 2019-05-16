@@ -153,11 +153,11 @@ while [[ true ]]; do
                 -nomessagebox \
             	-nocrashdialog \
                 -num_edicts 4096 \
+                +ip "${ip}" \
                 +con_logfile $console \
-                +exec $config \
                 +sm_basepath $smbase \
                 +map lobby \
-                +ip "${ip}" ${srcds_params}
+                +exec $config ${srcds_params}
 
             # wait a bit before attempting to start the next server
             sleep $SLEEP_TIME
