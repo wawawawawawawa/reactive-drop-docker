@@ -100,6 +100,9 @@ IFS=$'\n'
 # get defined servers
 servers=$(set | grep "^rd\_server\_[0-9]\{1,\}\_port=[0-9]\{4,5\}$")
 
+# remove nextmap if present
+find /root/ -type f -name "nextmap.smx" -delete
+
 # switch to reactive drop folder
 cd /root/reactivedrop/
 
@@ -131,10 +134,7 @@ while [[ true ]]; do
             # create a copy of the sourcemod folder
             smbase="addons/sourcemod_${nr}"
             cp -a reactivedrop/addons/sourcemod reactivedrop/$smbase
-
-            # remove nextmap if present
-            find reactivedrop/$smbase -type f -name "nextmap.smx" -delete
-
+            
             # sourcebans
             write_sourcebans_serverid "reactivedrop/${smbase}/configs/sourcebans/sourcebans.cfg" $nr
 
