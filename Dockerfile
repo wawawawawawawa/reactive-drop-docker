@@ -4,43 +4,41 @@ FROM solarkennedy/wine-x11-novnc-docker
 RUN echo steam steam/question select "I AGREE" | debconf-set-selections
 RUN echo steam steam/license note '' | debconf-set-selections
 
-# install dependencies
-RUN apt-get update
-RUN apt-get -y install steamcmd
-
-# version tag
-ENV SERIAL=2019051500
-
-# run steam self-update
-RUN echo $VERSION > /opt/version
-
-# install the game
-#COPY templates /usr/local/templates
-#RUN /usr/games/steamcmd +runscript /usr/local/templates/install.server
-#RUN /usr/games/steamcmd +runscript /usr/local/templates/install.workshop
-# use a volume mount for steam
-VOLUME /root/.steam/
-VOLUME /root/Steam/
-
-# install needed utilities
-RUN apt-get -y install vim less aptitude procps unzip software-properties-common
-
-# get gpg key
-RUN wget -q -O- https://dl.winehq.org/wine-builds/winehq.key | apt-key add -
-RUN apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
-
 # go multiarch
 RUN dpkg --add-architecture i386
 RUN apt update
 
+# use a volume mount for both steam game and steam locations
+VOLUME /root/.steam/
+VOLUME /root/Steam/
+
+# install needed utilities
+RUN apt-get -y install vim less aptitude procps unzip software-properties-common steamcmd libsdl2-2.0-0 libsdl2-2.0-0:i386
+
+# get gpg key of wine repository
+RUN wget -q -O- https://dl.winehq.org/wine-builds/winehq.key | apt-key add -
+RUN apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
+
+# install some dependencies not in bionic
+RUN wget -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Ubuntu_18.10_standard/amd64/libfaudio0_19.05-0~cosmic_amd64.deb \
+    && dpkg -i libfaudio0_19.05-0~cosmic_amd64.deb \
+    && rm -f libfaudio0_19.05-0~cosmic_amd64.deb
+
+RUN wget -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Ubuntu_18.10_standard/i386/libfaudio0_19.05-0~cosmic_i386.deb \
+    && dpkg -i libfaudio0_19.05-0~cosmic_i386.deb \
+    && rm -f libfaudio0_19.05-0~cosmic_i386.deb
+
+
 # upgrade wine
-RUN apt -y remove wine32
-RUN apt -y install libsdl2-2.0-0 libsdl2-2.0-0:i386
-RUN wget -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Ubuntu_18.10_standard/i386/libfaudio0_19.05-0~cosmic_i386.deb
-RUN wget -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Ubuntu_18.10_standard/amd64/libfaudio0_19.05-0~cosmic_amd64.deb
-RUN dpkg -i libfaudio*.deb
-RUN rm -f libfaudio*.deb
 RUN apt install -y --install-recommends winehq-staging:i386
+
+# cleanup, enable after we are finished
+RUN apt-get -qq -y autoremove \
+    && apt-get -qq -y clean \
+    && apt-get -qq -y autoclean \
+    && find /var/lib/apt/lists -type f -delete \
+    && unset PACKAGES \
+    && rm -f /tmp/*.zip
 
 # link reactive drop for easier usage within scripts
 RUN ln -sf /root/.steam/SteamApps/common/reactivedrop /root/reactivedrop
@@ -62,17 +60,6 @@ RUN wget -q https://github.com/sbpp/sourcebans-pp/releases/download/1.6.3/source
     && cd /tmp \
     && unzip -x /tmp/sourcebans.zip \
     && cp -a /tmp/sourcebans-pp-1.6.3.plugin-only/addons /root/template/reactivedrop/
-
-# TODO: cleanup, enable after we are finished
-RUN apt-get -qq -y autoremove \
-    && apt-get -qq -y clean \
-    && apt-get -qq -y autoclean \
-    && find /var/lib/apt/lists -type f -delete \
-    && unset PACKAGES \
-    && rm -f /tmp/*.zip
-
-# remove nextmap, as it causes issues
-RUN rm -f /root/reactivedrop/reactivedrop/addons/sourcemod/plugins/nextmap.smx
 
 # copy files
 COPY etc/ /etc/
