@@ -97,13 +97,13 @@ IFS=$'\n'
 # link workshop content
 /usr/local/bin/link-workshop.sh
 
-# get defined servers
-servers=$(set | grep "^rd\_server\_[0-9]\{1,\}\_port=[0-9]\{4,5\}$")
-
 # remove nextmap if present
 find /root/ -type f -name 'nextmap.smx' -delete
 find /root/reactivedrop/reactivedrop/save -type f -name '*.campaignsave' -delete
-find /root/reactivedrop/reactivedrop/logs -type f -name '*.log' -delete 
+find /root/reactivedrop/reactivedrop/logs -type f -name '*.log' -delete
+
+# get defined servers
+servers=$(set | grep "^rd\_server\_[0-9]\{1,\}\_port=[0-9]\{4,5\}$")
 
 # switch to reactive drop folder
 cd /root/reactivedrop/
@@ -136,7 +136,7 @@ while [[ true ]]; do
             # create a copy of the sourcemod folder
             smbase="addons/sourcemod_${nr}"
             cp -a reactivedrop/addons/sourcemod reactivedrop/$smbase
-            
+
             # sourcebans
             write_sourcebans_serverid "reactivedrop/${smbase}/configs/sourcebans/sourcebans.cfg" $nr
 
@@ -152,11 +152,11 @@ while [[ true ]]; do
                 -nomessagebox \
             	-nocrashdialog \
                 -num_edicts 4096 \
-                +ip "${ip}" \
                 +con_logfile $console \
-                +sm_basepath $smbase \
                 +exec $config \
-                +map lobby ${srcds_params}
+                +sm_basepath $smbase \
+                +map lobby \
+                +ip "${ip}" ${srcds_params}
 
             # wait a bit before attempting to start the next server
             sleep $SLEEP_TIME
