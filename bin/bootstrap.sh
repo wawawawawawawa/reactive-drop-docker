@@ -104,10 +104,7 @@ servers=$(set | grep "^rd\_server\_[0-9]\{1,\}\_port=[0-9]\{4,5\}$")
 cd /root/reactivedrop/
 
 # remove nextmap if present
-nextmap="reactivedrop/addons/sourcemod/plugins/nextmap.smx"
-if [[ -f $nextmap ]]; then
-    rm -f $nextmap
-fi
+find reactivedrop/addons -type f -name "nextmap.smx" -delete
 
 # loop
 while [[ true ]]; do
