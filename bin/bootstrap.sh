@@ -103,6 +103,12 @@ servers=$(set | grep "^rd\_server\_[0-9]\{1,\}\_port=[0-9]\{4,5\}$")
 # switch to reactive drop folder
 cd /root/reactivedrop/
 
+# remove nextmap if present
+nextmap="reactivedrop/addons/sourcemod/plugins/nextmap.smx"
+if [[ -f $nextmap ]]; then
+    rm -f $nextmap
+fi
+
 # loop
 while [[ true ]]; do
 
