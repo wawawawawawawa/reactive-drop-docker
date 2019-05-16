@@ -100,7 +100,7 @@ IFS=$'\n'
 # remove nextmap if present
 find /root/ -type f -name 'nextmap.smx' -delete
 find /root/reactivedrop/reactivedrop/save -type f -name '*.campaignsave' -delete
-find /root/reactivedrop/reactivedrop/logs -type f -name '*.log' -delete
+find /root/reactivedrop/reactivedrop -type f -name '*.log' -delete
 
 # get defined servers
 servers=$(set | grep "^rd\_server\_[0-9]\{1,\}\_port=[0-9]\{4,5\}$")
