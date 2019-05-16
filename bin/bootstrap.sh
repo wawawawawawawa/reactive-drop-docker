@@ -143,6 +143,7 @@ while [[ true ]]; do
             # check if the env does exist
             echo "Starting server #${nr}"
 
+            # startup parameters of config, smbase, lobby, ip must be in exactly this order
             wine start \
                 ./srcds.exe \
                 -console \
