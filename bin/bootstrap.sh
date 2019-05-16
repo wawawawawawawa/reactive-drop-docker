@@ -155,8 +155,8 @@ while [[ true ]]; do
                 +ip "${ip}" \
                 +con_logfile $console \
                 +sm_basepath $smbase \
-                +map lobby \
-                +exec $config ${srcds_params}
+                +exec $config \
+                +map lobby ${srcds_params}
 
             # wait a bit before attempting to start the next server
             sleep $SLEEP_TIME
