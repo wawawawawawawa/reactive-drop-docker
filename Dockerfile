@@ -29,7 +29,7 @@ RUN wget -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/U
     && rm -f libfaudio0_19.05-0~cosmic_i386.deb
 
 # upgrade wine
-RUN apt install -y --install-recommends winehq-staging:i386
+RUN apt install -y --install-recommends winehq-stable:i386
 
 # cleanup, enable after we are finished
 RUN apt-get -qq -y autoremove \
