@@ -148,16 +148,16 @@ while [[ true ]]; do
                 ./srcds.exe \
                 -console \
                 -game reactivedrop \
+                +ip "${ip}" \
                 -port $port \
                 -threads 1 \
+                +map lobby \
                 -nomessagebox \
             	-nocrashdialog \
                 -num_edicts 4096 \
                 +con_logfile $console \
                 +exec $config \
-                +sm_basepath $smbase \
-                +map lobby \
-                +ip "${ip}" ${srcds_params}
+                +sm_basepath $smbase ${srcds_params}
 
             # wait a bit before attempting to start the next server
             sleep $SLEEP_TIME
