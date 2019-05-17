@@ -99,6 +99,7 @@ IFS=$'\n'
 
 # remove nextmap if present
 find /root/ -type f -name 'nextmap.smx' -delete
+find /root/ -type f -name 'astools.smx' -delete
 find /root/reactivedrop/reactivedrop/save -type f -name '*.campaignsave' -delete
 find /root/reactivedrop/reactivedrop -type f -name '*.log' -delete
 
