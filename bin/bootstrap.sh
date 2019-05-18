@@ -20,11 +20,6 @@ echo ' * Downloading game and updates. Take a coffee, this might take some time.
 echo '******************************************************************************'
 /usr/games/steamcmd +runscript /usr/local/templates/install.server
 
-echo '******************************************************************************'
-echo ' * Downloading workshop content. Take another coffee, this might take time.. *'
-echo '******************************************************************************'
-/usr/games/steamcmd +runscript /usr/local/templates/install.workshop
-
 # copy over template
 cp -a /root/template/* /root/reactivedrop/
 
@@ -101,6 +96,9 @@ function link_workshop_contents()
     # just link the whole folder
     rm -rf $addonfolder
     ln -sf $workshopdir $addonfolder
+
+    # write a new workshop configuration file
+    /usr/local/bin/workshop-config.sh
 }
 
 # run a persistent wine server during initialization
