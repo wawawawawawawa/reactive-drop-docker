@@ -13,7 +13,7 @@ VOLUME /root/.steam/
 VOLUME /root/Steam/
 
 # install needed utilities
-RUN apt-get -y install vim less aptitude procps unzip software-properties-common steamcmd libsdl2-2.0-0 libsdl2-2.0-0:i386
+RUN apt-get -y install vim less aptitude procps unzip software-properties-common steamcmd libsdl2-2.0-0 libsdl2-2.0-0:i386 locales-all
 
 # get gpg key of wine repository
 RUN wget -q -O- https://dl.winehq.org/wine-builds/winehq.key | apt-key add -
@@ -27,6 +27,10 @@ RUN wget -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/U
 RUN wget -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Ubuntu_18.10_standard/i386/libfaudio0_19.05-0~cosmic_i386.deb \
     && dpkg -i libfaudio0_19.05-0~cosmic_i386.deb \
     && rm -f libfaudio0_19.05-0~cosmic_i386.deb
+
+
+# remove previous wine prefix, it contains outdated certificates
+RUN rm -rf /root/prefix32
 
 # upgrade wine
 RUN apt install -y --install-recommends winehq-staging:i386
@@ -59,6 +63,12 @@ RUN wget -q https://github.com/sbpp/sourcebans-pp/releases/download/1.6.3/source
     && cd /tmp \
     && unzip -x /tmp/sourcebans.zip \
     && cp -a /tmp/sourcebans-pp-1.6.3.plugin-only/addons /root/template/reactivedrop/
+
+# winetricks
+RUN cd /usr/local/bin \
+    && wget -q https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks \
+    && chmod +x winetricks
+RUN winetricks win7
 
 # copy files
 COPY etc/ /etc/

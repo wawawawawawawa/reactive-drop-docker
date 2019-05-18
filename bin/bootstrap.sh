@@ -16,9 +16,14 @@ echo '**************************************************************************
 
 # run updates
 echo '******************************************************************************'
-echo ' * Downloading game and updates. Take a coffee, this may take some time..    *'
+echo ' * Downloading game and updates. Take a coffee, this might take some time..  *'
 echo '******************************************************************************'
 /usr/games/steamcmd +runscript /usr/local/templates/install.server
+
+echo '******************************************************************************'
+echo ' * Downloading workshop content. Take another coffee, this might take time.. *'
+echo '******************************************************************************'
+/usr/games/steamcmd +runscript /usr/local/templates/install.workshop
 
 # copy over template
 cp -a /root/template/* /root/reactivedrop/
@@ -88,14 +93,21 @@ function write_sourcebans_serverid()
     fi
 }
 
+function link_workshop_contents()
+{
+    workshopdir="/root/Steam/steamapps/workshop"
+    addonfolder="/root/reactivedrop/reactivedrop/workshop"
+
+    # just link the whole folder
+    rm -rf $addonfolder
+    ln -sf $workshopdir $addonfolder
+}
+
 # run a persistent wine server during initialization
 /usr/bin/wineserver -k -p 60
 
 # set ifs
 IFS=$'\n'
-
-# link workshop content
-/usr/local/bin/link-workshop.sh
 
 # remove nextmap if present
 find /root/ -type f -name 'nextmap.smx' -delete
@@ -103,15 +115,8 @@ find /root/ -type f -name 'astools.smx' -delete
 find /root/reactivedrop/reactivedrop/save -type f -name '*.campaignsave' -delete
 find /root/reactivedrop/reactivedrop -type f -name '*.log' -delete
 
-# fix app manifest that is looked for in the wrong folder
-# this fixes workshop support
-ln -sf \
-    /root/.steam/SteamApps/common/reactivedrop/steamapps/appmanifest_563560.acf \
-    /root/reactivedrop/bin/steamsapps/appmanifest_563560.acf
-
-ln -sf \
-    /root/.steam/SteamApps/common/reactivedrop/steamapps/appmanifest_582400.acf \
-    /root/reactivedrop/bin/steamsapps/appmanifest_582400.acf
+# link workshop
+link_workshop_contents
 
 # get defined servers
 servers=$(set | grep "^rd\_server\_[0-9]\{1,\}\_port=[0-9]\{4,5\}$")

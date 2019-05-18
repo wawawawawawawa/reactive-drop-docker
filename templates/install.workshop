@@ -1,0 +1,32 @@
+@sSteamCmdForcePlatformType windows
+
+login anonymous
+
+workshop_download_item 563560 1118193931 // NAAM
+workshop_download_item 563560 1093180806 // Adanaxis
+workshop_download_item 563560 909702841  // Dead City
+workshop_download_item 563560 918258674  // BioGen Corporation
+workshop_download_item 563560 880002363  // The Beginning
+workshop_download_item 563560 896151542  // Crazy Corner
+workshop_download_item 563560 861497042  // City 17
+workshop_download_item 563560 856807495  // Larnok
+workshop_download_item 563560 848935191  // Infested Lab X
+workshop_download_item 563560 848331447  // Nest
+workshop_download_item 563560 848260335  // Silent Corridors
+workshop_download_item 563560 936675978  // Obscure
+workshop_download_item 563560 1552568795 // Revenants Voyage
+workshop_download_item 563560 1104834692 // Onfire backfire
+workshop_download_item 563560 936916506  // ASBI backfire
+workshop_download_item 563560 936914699  // backfire
+workshop_download_item 563560 957780766  // absolute madness
+workshop_download_item 563560 1152151235 // Gandalf's Revenge
+workshop_download_item 563560 1176332590 // No Flamer Backfire
+workshop_download_item 563560 1274862258 // Mine field
+workshop_download_item 563560 918258674  // Biogen campaign
+workshop_download_item 563560 848935191  // Infected lab X
+workshop_download_item 563560 921199337  // Call to cathalu
+workshop_download_item 563560 1313628775 // nitro canister
+workshop_download_item 563560 1366599495 // asbi pro
+workshop_download_item 563560 1614683161 // l4d2
+
+quit
