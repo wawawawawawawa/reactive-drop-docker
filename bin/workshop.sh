@@ -1,6 +1,9 @@
 #!/bin/bash
 
-SLEEP_TIME=15
+SLEEP_TIME=10
+
+# initialization time
+sleep $SLEEP_TIME
 
 running="-1"
 while [[ "$running" != "" ]]; do
@@ -22,5 +25,6 @@ echo '**************************************************************************
 /usr/local/bin/workshop-config.sh
 
 # do this only once every 6 hours
+echo "All done, if there are workshop updates, they will be loaded after the next map change."
 echo "Next workshop update check will be in 6 hours.."
 sleep 21600
