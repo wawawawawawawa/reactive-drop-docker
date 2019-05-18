@@ -19,12 +19,12 @@ while [[ "$running" != "" ]]; do
 done
 
 # update
-echo ''
-echo '******************************************************************************'
-echo ' * Downloading workshop contents in background..                             *'
-echo '******************************************************************************'
-/usr/games/steamcmd +runscript /usr/local/templates/install.workshop
-/usr/local/bin/link-workshop.sh
+#echo ''
+#echo '******************************************************************************'
+#echo ' * Downloading workshop contents in background..                             *'
+#echo '******************************************************************************'
+#/usr/games/steamcmd +runscript /usr/local/templates/install.workshop
+#/usr/local/bin/link-workshop.sh
 
 # only check once every 4 hours
 sleep 14400
