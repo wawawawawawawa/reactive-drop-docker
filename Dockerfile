@@ -29,7 +29,7 @@ RUN wget -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/U
     && rm -f libfaudio0_19.05-0~cosmic_i386.deb
 
 # upgrade wine
-RUN apt install -y --install-recommends winehq-stable:i386
+RUN apt install -y --install-recommends winehq-staging:i386
 
 # cleanup, enable after we are finished
 RUN apt-get -qq -y autoremove \
@@ -50,7 +50,7 @@ RUN wget -q https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git970-windo
     && rm -f /tmp/metamod.zip
 
 # sourcemod
-RUN wget -q https://sm.alliedmods.net/smdrop/1.9/sourcemod-1.9.0-git6280-windows.zip -O /tmp/sourcemod.zip \
+RUN wget -q https://sm.alliedmods.net/smdrop/1.9/sourcemod-1.9.0-git6281-windows.zip -O /tmp/sourcemod.zip \
     && cd /root/template/reactivedrop \
     && unzip -x /tmp/sourcemod.zip
 
