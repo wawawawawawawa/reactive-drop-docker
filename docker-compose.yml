@@ -2,9 +2,7 @@ version: '3.7'
 
 services:
   swarm:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: "mithrand0/reactive-drop-docker"
     ports:
       - "8080:8080"
       - target: 28001
@@ -31,6 +29,11 @@ services:
 #      - "srcds_params=-dev"
     networks:
       - network
+
+  watchtower:
+    image: "v2tec/watchtower"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
 
 networks:
   network:
