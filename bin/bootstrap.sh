@@ -103,6 +103,16 @@ find /root/ -type f -name 'astools.smx' -delete
 find /root/reactivedrop/reactivedrop/save -type f -name '*.campaignsave' -delete
 find /root/reactivedrop/reactivedrop -type f -name '*.log' -delete
 
+# fix app manifest that is looked for in the wrong folder
+# this fixes workshop support
+ln -sf \
+    /root/.steam/SteamApps/common/reactivedrop/steamapps/appmanifest_563560.acf \
+    /root/reactivedrop/bin/steamsapps/appmanifest_563560.acf
+
+ln -sf \
+    /root/.steam/SteamApps/common/reactivedrop/steamapps/appmanifest_582400.acf \
+    /root/reactivedrop/bin/steamsapps/appmanifest_582400.acf
+
 # get defined servers
 servers=$(set | grep "^rd\_server\_[0-9]\{1,\}\_port=[0-9]\{4,5\}$")
 
