@@ -161,6 +161,7 @@ while [[ true ]]; do
                 ./srcds.exe \
                 -console \
                 -game reactivedrop \
+                -autoupdate \
                 -port $port \
                 -threads 1 \
                 -nomessagebox \
