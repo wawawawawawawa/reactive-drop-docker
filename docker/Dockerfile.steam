@@ -1,0 +1,19 @@
+# target container
+FROM solarkennedy/wine-x11-novnc-docker
+
+# agree with license
+RUN echo steam steam/question select "I AGREE" | debconf-set-selections
+RUN echo steam steam/license note '' | debconf-set-selections
+
+# install steam
+RUN apt update && apt -y install steamcmd locales-all boxes
+
+# disable cache from here
+ARG build
+ENV VERSION=$build
+RUN echo "Packaging version: ${VERSION}" | boxes
+
+# self update steam
+COPY bin/steam-run-script /usr/local/sbin/steam-run-script
+COPY templates/update.steam /usr/local/templates/update.steam
+RUN steam-run-script update.steam

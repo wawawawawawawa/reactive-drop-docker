@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+# paths
+workshopdir="/root/.steam/SteamApps/workshop"
+addonfolder="/root/reactivedrop/reactivedrop/addons"
+
+# link items
+for addon in $(find $workshopdir -type f -name '*.vpk'); do
+    # extract params
+    directory=$(dirname $addon)
+    id=$(basename $directory)
+
+    # link item
+    ln -sf $addon $addonfolder/$id.vpk
+
+done

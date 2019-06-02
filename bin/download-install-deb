@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+url=$1
+
+# go to temp dir
+cd /tmp
+
+# fetch
+
+wget -q "${url}"
+dpkg -i *.deb
+rm *.deb

@@ -11,17 +11,8 @@ echo '**************************************************************************
 echo '* Starting Reactive Drop server                                              *'
 echo '******************************************************************************'
 
-# run steam self update
-/usr/games/steamcmd +runscript /usr/local/templates/steam.selfupdate
-
-# run updates
-echo '******************************************************************************'
-echo ' * Downloading game and updates. Take a coffee, this might take some time..  *'
-echo '******************************************************************************'
-/usr/games/steamcmd +runscript /usr/local/templates/install.server
-
-# copy over template
-cp -a /root/template/* /root/reactivedrop/
+# check for last minute game updates
+steam-run-script install.server
 
 # get the ip address
 #ip=$(wget -q -O- "https://api.ipify.org/")
@@ -88,38 +79,21 @@ function write_sourcebans_serverid()
     fi
 }
 
-function link_workshop_contents()
-{
-    workshopdir="/root/Steam/steamapps/workshop"
-    addonfolder="/root/reactivedrop/reactivedrop/workshop"
-
-    # just link the whole folder
-    rm -rf $addonfolder
-    ln -sf $workshopdir $addonfolder
-
-    # write a new workshop configuration file
-    /usr/local/bin/workshop-config.sh
-}
-
 # run a persistent wine server during initialization
 /usr/bin/wineserver -k -p 60
 
 # set ifs
 IFS=$'\n'
 
-# remove nextmap if present
-find /root/ -type f -name 'nextmap.smx' -delete
-find /root/reactivedrop/reactivedrop/save -type f -name '*.campaignsave' -delete
-find /root/reactivedrop/reactivedrop -type f -name '*.log' -delete
-
-# link workshop
-link_workshop_contents
-
 # get defined servers
 servers=$(set | grep "^rd\_server\_[0-9]\{1,\}\_port=[0-9]\{4,5\}$")
 
 # switch to reactive drop folder
 cd /root/reactivedrop/
+
+
+# remove some leftovers if present
+find ./reactivedrop -name '*.campaignsave' -or -name '*.log' -delete
 
 # loop
 while [[ true ]]; do

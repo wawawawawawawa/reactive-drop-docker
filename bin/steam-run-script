@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+
+# read script
+script=$1
+name=$(echo $script | cut -d '.' -f 2)
+
+echo "Installing ${name} files, this might take some time.." | boxes -d stone
+/usr/games/steamcmd +runscript /usr/local/templates/$script

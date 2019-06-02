@@ -1,0 +1,6 @@
+# target container
+FROM mithrand0/reactive-drop-base-steam
+
+# install game files
+COPY templates/install.server /usr/local/templates/install.server
+RUN steam-run-script install.server
