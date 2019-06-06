@@ -39,25 +39,9 @@ RUN apt-get -qq -y autoremove \
 # link reactive drop for easier usage within scripts
 RUN ln -sf /root/.steam/SteamApps/common/reactivedrop /root/reactivedrop
 
-# metamod
-RUN wget -q https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git970-windows.zip -O /tmp/metamod.zip \
-    && cd /root/reactivedrop/reactivedrop \
-    && unzip -x /tmp/metamod.zip \
-    && rm -f /tmp/metamod.zip
-
 # sourcemod
-RUN wget -q https://sm.alliedmods.net/smdrop/1.9/sourcemod-1.9.0-git6281-windows.zip -O /tmp/sourcemod.zip \
-    && cd /root/reactivedrop/reactivedrop \
-    && unzip -x /tmp/sourcemod.zip
-
-# sourcebans
-RUN wget -q https://github.com/sbpp/sourcebans-pp/releases/download/1.6.3/sourcebans-pp-1.6.3.plugin-only.zip -O /tmp/sourcebans.zip \
-    && cd /tmp \
-    && unzip -x /tmp/sourcebans.zip \
-    && cp -a /tmp/sourcebans-pp-1.6.3.plugin-only/addons /root/reactivedrop/reactivedrop/
-
-# remove nextmap.smx
-RUN find /root/reactivedrop/reactivedrop -type f -name 'nextmap.smx' -delete
+COPY bin/install-sourcemod /usr/local/sbin/install-sourcemod
+RUN /usr/local/sbin/install-sourcemod
 
 # winetricks
 RUN cd /usr/local/bin \
