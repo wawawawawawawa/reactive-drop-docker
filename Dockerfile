@@ -6,6 +6,9 @@ ARG build
 ENV VERSION=$build
 RUN echo "Packaging version: ${VERSION}" | boxes
 
+# refresh package lists
+RUN apt update
+
 # install needed utilities
 RUN apt-get -y install vim less aptitude procps unzip software-properties-common libsdl2-2.0-0 libsdl2-2.0-0:i386
 
@@ -57,3 +60,6 @@ COPY reactivedrop/ /root/reactivedrop/reactivedrop/
 
 # install workshop content into game folder
 RUN workshop-activate
+
+# start command
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf" ]

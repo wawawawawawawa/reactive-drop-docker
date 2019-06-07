@@ -128,7 +128,9 @@ while [[ true ]]; do
             write_sourcebans_serverid "reactivedrop/${smbase}/configs/sourcebans/sourcebans.cfg" $nr
 
             # check if the env does exist
-            echo "Starting server #${nr}"
+            echo "======================"
+            echo "| Starting server #${nr} |"
+            echo "======================"
 
             # startup parameters of config, smbase, lobby, ip must be in exactly this order
             wine start \
@@ -141,7 +143,8 @@ while [[ true ]]; do
                 -nomessagebox \
             	-nocrashdialog \
                 -num_edicts 4096 \
-                +con_logfile $console \
+                +con_logfile /dev/stderr \
+                +con_timestamp 1 \
                 +exec $config \
                 +sm_basepath $smbase \
                 +ip "${ip}" ${srcds_params}
