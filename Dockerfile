@@ -17,13 +17,8 @@ RUN wget -q -O- https://dl.winehq.org/wine-builds/winehq.key | apt-key add -
 RUN apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
 
 # install some dependencies not in bionic
-RUN wget -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Ubuntu_18.10_standard/amd64/libfaudio0_19.06-0~cosmic_amd64.deb \
-    && dpkg -i libfaudio0*.deb \
-    && rm -f libfaudio0*.deb
-
-RUN wget -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Ubuntu_18.10_standard/i386/libfaudio0_19.06-0~cosmic_i386.deb \
-    && dpkg -i libfaudio0*.deb \
-    && rm -f libfaudio0*.deb
+COPY external/ /tmp/external/
+RUN dpkg -i /tmp/external/*.deb && rm -rf /tmp/external
 
 # remove previous wine prefix, it contains outdated certificates
 RUN rm -rf /root/prefix32
