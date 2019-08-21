@@ -1,11 +1,18 @@
 #!/bin/bash
-set -e
+set -ex
 
-# config
+# meta- and sourcemod
 mm_base="https://mms.alliedmods.net/mmsdrop/1.10"
 sm_base="https://sm.alliedmods.net/smdrop/1.9/"
+ac_base="https://github.com/Silenci0/SMAC/archive/master.zip"
+
+# sourcebans
 sb_base="https://github.com/sbpp/sourcebans-pp/releases/download"
 sb_version="1.6.3"
+
+# steamworks
+sw_base="http://users.alliedmods.net/~kyles/builds/SteamWorks"
+sw_version="131"
 
 # switch install directory
 cd /root/reactivedrop/reactivedrop
@@ -20,6 +27,38 @@ latest=$(wget -q -O- "${sm_base}/sourcemod-latest-windows")
 wget -q "${sm_base}/${latest}" -O /tmp/sourcemod.zip
 unzip -x /tmp/sourcemod.zip
 
+# get steamworks, required for steam group handling
+wget -q "${sw_base}/SteamWorks-git${sw_version}-windows.zip" -O /tmp/steamworks.zip
+unzip -x /tmp/steamworks.zip
+
+# smac
+wget -q "${ac_base}" -O /tmp/smac.zip
+cd /tmp
+unzip -x /tmp/smac.zip
+cd /tmp/SMAC-master/addons/sourcemod
+
+# remove some smac plugins
+mv -f plugins plugins-available
+
+# enable some of them
+modules=(
+    "client"
+    "commands"
+    "cvars"
+    "rcon"
+    "aimbot"
+    "speedhack"
+    "eyetest"
+)
+
+mkdir plugins
+for module in "${modules[@]}"; do
+    ln -sfv plugins-available/smac_$module.smx plugins/smac_$module.smx
+done
+
+# copy the result
+cp -a /tmp/SMAC-master/* /root/reactivedrop/reactivedrop/
+
 # get sourcebans
 wget -q "${sb_base}/${sb_version}/sourcebans-pp-${sb_version}.plugin-only.zip" -O /tmp/sourcebans.zip
 cd /tmp
@@ -28,4 +67,3 @@ cp -a /tmp/sourcebans-pp-${sb_version}.plugin-only/addons /root/reactivedrop/rea
 
 # remove nextmap.smx
 find /root/reactivedrop/reactivedrop -type f -name 'nextmap.smx' -delete
-

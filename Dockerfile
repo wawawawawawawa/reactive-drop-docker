@@ -1,5 +1,5 @@
 # target container
-FROM mithrand0/reactive-drop-base-workshop
+FROM mithrand0/reactive-drop-base-game
 
 # disable cache from here
 ARG build
@@ -45,16 +45,17 @@ RUN /usr/local/sbin/install-sourcemod
 RUN cd /usr/local/bin \
     && wget -q https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks \
     && chmod +x winetricks
-RUN winetricks win7
 
 # copy files
 COPY etc/ /etc/
 COPY bin/bootstrap.sh /usr/local/bin/bootstrap.sh
-COPY bin/workshop-activate /usr/local/sbin/workshop-activate
 COPY reactivedrop/ /root/reactivedrop/reactivedrop/
 
-# install workshop content into game folder
-RUN workshop-activate
+# cache steam client installation
+VOLUME /root/prefix32/drive_c
+
+# cache workshop folder
+VOLUME /root/.steam/SteamApps/common/reactivedrop/reactivedrop/workshop
 
 # start command
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf" ]
