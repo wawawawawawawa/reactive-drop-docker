@@ -98,8 +98,19 @@ function write_sourcemod_whitelist_config()
 
 function install_steam_client()
 {
-  winetricks --unattended win7
-  winetricks --unattended steam
+    if [[ ! -f ~/prefix32/drive_c/Program\ Files/Steam/uninstall.exe ]]; then
+      # install steam client, it will dispatch itself into the background after update
+      winetricks --unattended win7
+      winetricks --unattended steam
+      run_steam_client
+    else
+      # just start it in the background
+      run_steam_client &
+    fi
+}
+
+function run_steam_client()
+{
   wine ~/prefix32/drive_c/Program\ Files/Steam/Steam.exe
 }
 
