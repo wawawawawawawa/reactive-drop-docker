@@ -70,13 +70,48 @@ function write_sourcemod_sourcebans_config()
 
 function write_sourcebans_serverid()
 {
-    file=$1
+    base=$1
     nr=$2
 
     id=$(set | grep "rd_sourcebans_${nr}_id")
     if [[ "$id" != "" ]]; then
-        sed -i'' "s/\-1/${nr}/g" $file
+        sed -i'' "s/\-1/${nr}/g" $base/configs/sourcebans/sourcebans.cfg
     fi
+}
+
+function write_sourcemod_whitelist_config()
+{
+    base=$1
+    nr=$2
+
+    group=$(set | grep "rd_whitelist_${nr}_group")
+    if [[ "$group" != "" ]]; then
+        echo "Whitelist configuration found, enabling whitelist"
+
+        # write config
+        echo "${group}" | cut -d '=' -f 2 > $base/configs/whitelist/whitelist.txt
+
+        # enable plugin
+        ln -sf ../plugins-available/serverwhitelistadvanced.smx $base/plugins/serverwhitelistadvanced.smx
+    fi
+}
+
+function install_steam_client()
+{
+    if [[ ! -f ~/prefix32/drive_c/Program\ Files/Steam/uninstall.exe ]]; then
+      # install steam client, it will dispatch itself into the background after update
+      winetricks --unattended win7
+      winetricks --unattended steam
+      run_steam_client
+    else
+      # just start it in the background
+      run_steam_client &
+    fi
+}
+
+function run_steam_client()
+{
+  wine ~/prefix32/drive_c/Program\ Files/Steam/Steam.exe
 }
 
 # run a persistent wine server during initialization
@@ -89,8 +124,11 @@ IFS=$'\n'
 servers=$(set | grep "^rd\_server\_[0-9]\{1,\}\_port=[0-9]\{4,5\}$")
 
 # switch to reactive drop folder
-cd /root/reactivedrop/
+cd /root/reactivedrop || exit 1
 
+# patch content servers
+#patch_content_servers
+install_steam_client
 
 # remove some leftovers if present
 find ./reactivedrop -name '*.campaignsave' -or -name '*.log' -delete
@@ -125,7 +163,8 @@ while [[ true ]]; do
             cp -a reactivedrop/addons/sourcemod reactivedrop/$smbase
 
             # sourcebans
-            write_sourcebans_serverid "reactivedrop/${smbase}/configs/sourcebans/sourcebans.cfg" $nr
+            write_sourcebans_serverid "reactivedrop/${smbase}" $nr
+            write_sourcemod_whitelist_config "reactivedrop/${smbase}" $nr
 
             # check if the env does exist
             echo "======================"
@@ -138,10 +177,11 @@ while [[ true ]]; do
                 -console \
                 -game reactivedrop \
                 -autoupdate \
-                -port $port \
+                -port "${port}" \
                 -threads 1 \
                 -nomessagebox \
-            	-nocrashdialog \
+            	  -nocrashdialog \
+            	  -authkey "${srcds_authkey}" \
                 -num_edicts 4096 \
                 +con_logfile /dev/stderr \
                 +con_timestamp 1 \

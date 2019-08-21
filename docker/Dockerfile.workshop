@@ -1,6 +1,0 @@
-# target container
-FROM mithrand0/reactive-drop-base-game
-
-# install workshop files
-COPY templates/install.workshop /usr/local/templates/install.workshop
-RUN steam-run-script install.workshop
