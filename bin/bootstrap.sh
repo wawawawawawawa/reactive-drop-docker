@@ -180,8 +180,8 @@ while [[ true ]]; do
                 -port "${port}" \
                 -threads 1 \
                 -nomessagebox \
-            	  -nocrashdialog \
-            	  -authkey "${srcds_authkey}" \
+                -nocrashdialog \
+                -authkey "${srcds_authkey}" \
                 -num_edicts 4096 \
                 +con_logfile /dev/stderr \
                 +con_timestamp 1 \
