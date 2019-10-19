@@ -99,7 +99,7 @@ public int Callback_OnHTTPResponse(Handle request, bool bFailure, bool bRequestS
     int sender = GetClientOfUserId(other);
     int receiver = GetClientOfUserId(userid);
 
-    if (!receiver || !IsClientInGame(receiver))return;
+    // if (!receiver || !IsClientInGame(receiver))return;
 
     char[] username = new char[iBufferSize];
     GetClientName(sender, username, 50);
