@@ -104,7 +104,7 @@ public int Callback_OnHTTPResponse(Handle request, bool bFailure, bool bRequestS
     char[] username = new char[iBufferSize];
     GetClientName(sender, username, 50);
 
-    CPrintToChat(receiver, "%s: (%s)", username, result);
+    CPrintToChat(receiver, "%s: %s", username, result);
 }  
 
 stock bool IsValidClient(int client, bool bAllowBots = false, bool bAllowDead = true)
