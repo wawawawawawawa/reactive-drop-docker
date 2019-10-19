@@ -37,6 +37,7 @@ cd /tmp
 unzip -x /tmp/smac.zip
 cd /tmp/SMAC-master/addons/sourcemod
 
+
 # remove some smac plugins
 mv -f plugins plugins-available
 
@@ -56,8 +57,9 @@ for module in "${modules[@]}"; do
     ln -sfv plugins-available/smac_$module.smx plugins/smac_$module.smx
 done
 
+# TODO: plugins are broken
 # copy the result
-cp -a /tmp/SMAC-master/* /root/reactivedrop/reactivedrop/
+#cp -a /tmp/SMAC-master/* /root/reactivedrop/reactivedrop/
 
 # get sourcebans
 wget -q "${sb_base}/${sb_version}/sourcebans-pp-${sb_version}.plugin-only.zip" -O /tmp/sourcebans.zip
