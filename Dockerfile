@@ -12,6 +12,9 @@ RUN apt update
 # install needed utilities
 RUN apt-get -y install vim less aptitude procps unzip software-properties-common libsdl2-2.0-0 libsdl2-2.0-0:i386
 
+# install a web server for translation services
+RUN apt-get -y install nginx-light php-fpm php-memcache memcached
+
 # get gpg key of wine repository
 RUN wget -q -O- https://dl.winehq.org/wine-builds/winehq.key | apt-key add -
 RUN apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
@@ -25,6 +28,7 @@ RUN rm -rf /root/prefix32
 
 # upgrade wine
 RUN apt install -y --install-recommends winehq-staging:i386
+
 
 # cleanup, enable after we are finished
 RUN apt-get -qq -y autoremove \
@@ -50,6 +54,7 @@ RUN cd /usr/local/bin \
 COPY etc/ /etc/
 COPY bin/bootstrap.sh /usr/local/bin/bootstrap.sh
 COPY reactivedrop/ /root/reactivedrop/reactivedrop/
+COPY www/index.php /var/www/html/index.php
 
 # cache steam client installation
 VOLUME /root/prefix32/drive_c

@@ -1,5 +1,24 @@
 #!/bin/bash
 
+# Reactive Drop - Docker Container
+# 
+# Copyright (C) 2019 Gandalf
+# 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the Free
+# Software Foundation, either version 3 of the License, or (at your option) 
+# any later version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT 
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with 
+# this program. If not, see http://www.gnu.org/licenses/.
+#
+# @author Gandalf
+#
+
 # vars
 SLEEP_TIME=2
 
@@ -50,7 +69,7 @@ function write_sourcemod_admins_simple()
 
     if [[ "$sourcemod_admin_steamid" != "" ]]; then
         echo "\"$sourcemod_admin_steamid\" \"z\"" > $file
-        echo "" > $file
+        echo "" >> $file
     fi
 
 }
@@ -114,6 +133,31 @@ function run_steam_client()
   wine ~/prefix32/drive_c/Program\ Files/Steam/Steam.exe
 }
 
+function compile_sm_translator()
+{
+    cd reactivedrop/addons/sourcemod/scripting || exit
+    wine spcomp.exe sm_translator.sp
+    mv -f sm_translator.smx ../plugins
+    cd -
+}
+
+function start_translation_services()
+{
+    if [[ "$yandex_translation_api_key" != "" ]]; then
+        echo "$yandex_translation_api_key" > /opt/translation_key.txt
+
+        # start a webserver for translation services
+        # TODO: need to create seperate users
+        mkdir -p /run/php
+        php-fpm7.2
+        nginx
+        memcached -u root -d
+    fi
+}
+
+# start translation api
+start_translation_services
+
 # run a persistent wine server during initialization
 /usr/bin/wineserver -k -p 60
 
@@ -129,6 +173,9 @@ cd /root/reactivedrop || exit 1
 # patch content servers
 #patch_content_servers
 install_steam_client
+
+# compile translator plugin
+compile_sm_translator
 
 # remove some leftovers if present
 find ./reactivedrop -name '*.campaignsave' -or -name '*.log' -delete
@@ -183,7 +230,7 @@ while [[ true ]]; do
                 -nocrashdialog \
                 -authkey "${srcds_authkey}" \
                 -num_edicts 4096 \
-                -tickrate 100 \
+                -tickrate 128 \
                 +con_logfile /dev/stderr \
                 +con_timestamp 1 \
                 +exec $config \
