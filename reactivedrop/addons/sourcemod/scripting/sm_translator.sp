@@ -13,6 +13,8 @@
  *
  * You should have received a copy of the GNU General Public License along with 
  * this program. If not, see http://www.gnu.org/licenses/.
+ *
+ * @author RD specific adjustments added by Gandalf under GPL
  */
 
 #include <sdktools>
@@ -24,7 +26,7 @@
 
 public Plugin myinfo =
 {
-	name = "SM Translator",
+	name = "SM Translator RD",
 	description = "Translate chat messages",
 	author = "Franc1sco franug, +Gandalf",
 	version = DATA,
@@ -33,8 +35,6 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	// LoadTranslations("sm_translator.phrases.txt");
-
 	CreateConVar("sm_translator_version", DATA, "SM Translator Version", FCVAR_SPONLY|FCVAR_NOTIFY);
 	
 	AddCommandListener(Command_Say, "say");	
@@ -61,11 +61,12 @@ public Action Command_Say(int client, const char[] command, int args)
 
 	for(int i = 1; i <= MaxClients; i++)
 	{
-			if(IsValidClient(i) && i != client) {
-					GetLanguageInfo(GetClientLanguage(i), temp, 3); // get Foreign language
-					Handle request = CreateRequest(buffer, temp, i, client); // Translate not Foreign msg to Foreign player
-					SteamWorks_SendHTTPRequest(request);
-			}
+		// only send messages to others
+		if(IsValidClient(i) && i != client) {
+				GetLanguageInfo(GetClientLanguage(i), temp, 3); // get Foreign language
+				Handle request = CreateRequest(buffer, temp, i, client); // Translate not Foreign msg to Foreign player
+				SteamWorks_SendHTTPRequest(request);
+		}
 	}
 }
 
@@ -85,7 +86,6 @@ public int Callback_OnHTTPResponse(Handle request, bool bFailure, bool bRequestS
 {
     if (!bRequestSuccessful || eStatusCode != k_EHTTPStatusCode200OK)
     {        
-		LogMessage("translation failure!");
 		return;
     }
 	
@@ -96,11 +96,13 @@ public int Callback_OnHTTPResponse(Handle request, bool bFailure, bool bRequestS
     SteamWorks_GetHTTPResponseBodyData(request, result, iBufferSize);
     delete request;
 
+	// other is the person who sent it
     int sender = GetClientOfUserId(other);
+
+	// userid is the user who it was sent to
     int receiver = GetClientOfUserId(userid);
 
-    // if (!receiver || !IsClientInGame(receiver))return;
-
+	// fetch the sender username
     char[] username = new char[iBufferSize];
     GetClientName(sender, username, 50);
 

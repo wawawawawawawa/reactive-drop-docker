@@ -13,6 +13,14 @@ services:
         published: 28001
         protocol: udp
         mode: host
+      - target: 28002
+        published: 28002
+        protocol: tcp
+        mode: host
+      - target: 28002
+        published: 28002
+        protocol: udp
+        mode: host        
     environment:
       - "rd_server_1_port=28001"
       - "rd_server_1_hostname=My First Server"
@@ -20,13 +28,18 @@ services:
 #      - "rd_server_2_port=28002"
 #      - "rd_server_2_hostname=My Second Server"
 #      - "rd_sourcebans_2_id=2"
-#      - "sourcemod_admin_steamid=12345"
+#      - "sourcemod_admin_steamid="
 #      - "sourcebans_host=127.0.0.1"
 #      - "sourcebans_port=3306"
 #      - "sourcebans_user=myuser"
 #      - "sourcebans_password=mysecret"
 #      - "sourcebans_database=sourcebans"
 #      - "srcds_params=-dev"
+#      - "rd_server_1_sv_steamgroup=3885128"
+#      - "rd_server_1_sv_steamgroup=29117417"
+#      - "rd_server_1_sv_steamgroup=27357479"
+#      - "yandex_translation_api_key="
+
     networks:
       - network
 

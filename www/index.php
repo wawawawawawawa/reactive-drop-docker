@@ -1,60 +1,110 @@
 <?php
-function translate($text, $lang='en')
+/*  SM Translator
+ *
+ *  Copyright (C) 2019
+ * 
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) 
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with 
+ * this program. If not, see http://www.gnu.org/licenses/.
+ *
+ * @author Gandalf
+ */
+
+class Translation
 {
-    // cache key
-    $key = sprintf('%s:%s', $lang, hash('md4', $text));
+    const API_KEY='/opt/translation_key.txt';
+    const CACHE_TTL=604800;
+    const MAX_LENGTH=508;
 
-    // lookup the key
-    $mc = new Memcache;
-    $mc->addServer('127.0.0.1', 11211);
+    private $text;
+    private $cache;
 
-    // fetch translation key
-    $apiKey = $mc->get('translation_key');
-    if (!$apiKey) {
-        $apiKey = get_api_key();
-        $mc->set('translation_key', $apiKey);
+    public function __construct($text)
+    {
+        $this->text = trim($text);
+        $this->cache = $this->createCache();
     }
 
-    $json = $mc->get($key);
-    if (!$json) {
+    private function createCache()
+    {
+        $cache = new Memcache;
+        $cache->addServer('127.0.0.1', 11211);
 
-        // translate
+        return $cache;
+    }
+
+    private function getApiKey()
+    {
+        $cacheKey = 'translation_key';
+        $apiKey = $this->cache->get($cacheKey);
+
+        if (!$apiKey) {
+            $apiKey = trim(file_get_contents(self::API_KEY));
+            $this->cache->set($cacheKey, $apiKey, null, self::CACHE_TTL);
+        }
+
+        return $apiKey;
+    }
+
+    private function fetchTranslation($lang)
+    {
         $uri = sprintf(
             'https://translate.yandex.net/api/v1.5/tr.json/translate?key=%s&text=%s&lang=%s',
-            $apiKey,
-            urlencode($text),
+            $this->getApiKey(),
+            urlencode($this->text),
             $lang
         );
 
-        $json = (array)json_decode(file_get_contents($uri));
-    
-        // store the response for one day
-        $mc->set($key, $json, null, 86400);
+        $response = json_decode(file_get_contents($uri));
+        if (!$response) {
+            throw new Exception('no response');
+        }
+
+        return $response;
     }
 
-    header(
-        sprintf('X-Translation-Status: %d', $json['code']),
-        true,
-        $json['code']
-    );
-
-    if ($json['code'] == 200) {
-        echo substr(
-            current($json['text']),
-            0,
-            500
+    private function sendHeader($code)
+    {
+        header(
+            sprintf('X-Status: %d', $code),
+            true,
+            $code
         );
     }
+
+    public function translate($lang)
+    {
+        $key = sprintf('%s:%s', $lang, hash('md4', $this->text));
+
+        $response = $this->cache->get($key);
+        if (!$response) {
+            $response = $this->fetchTranslation($lang);
+            $this->cache->set($key, $response, null, self::CACHE_TTL);
+        }
+
+        if ($response->code == 200 && $this->text == trim(current($response->text))) {
+            $response->code = 204; // no-content
+        }
+
+        $this->sendHeader($response->code);
+        if ($response->code == 200) {
+            echo substr(current($response->text), 0, self::MAX_LENGTH);
+        }
+    }
 }
 
-function get_api_key()
-{
-    return trim(file_get_contents('/opt/translation_key.txt'));
-}
+$text = $_REQUEST['input'] ?? 'Bonjour';
+$lang = $_REQUEST['target'] ?? 'en';
 
-translate(
-    $_REQUEST['input'],
-    $_REQUEST['target']
-);
+$translator = new Translation($text);
+$translator->translate($lang);
 
 exit;
