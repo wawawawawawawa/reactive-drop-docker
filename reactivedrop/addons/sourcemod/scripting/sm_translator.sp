@@ -62,7 +62,7 @@ public Action Command_Say(int client, const char[] command, int args)
 	for(int i = 1; i <= MaxClients; i++)
 	{
 		// only send messages to others
-		if(IsValidClient(i) && i != client) {
+		if(IsValidClient(i)) {
 				GetLanguageInfo(GetClientLanguage(i), temp, 3); // get Foreign language
 				Handle request = CreateRequest(buffer, temp, i, client); // Translate not Foreign msg to Foreign player
 				SteamWorks_SendHTTPRequest(request);
@@ -70,19 +70,19 @@ public Action Command_Say(int client, const char[] command, int args)
 	}
 }
 
-Handle CreateRequest(char[] input, char[] target, int other = 0)
+Handle CreateRequest(char[] input, char[] target, int client, int other = 0)
 {
 	// send it to the local webserver
     Handle request = SteamWorks_CreateHTTPRequest(k_EHTTPMethodGET, "http://localhost/");
     SteamWorks_SetHTTPRequestGetOrPostParameter(request, "input", input);
     SteamWorks_SetHTTPRequestGetOrPostParameter(request, "target", target);
     
-    SteamWorks_SetHTTPRequestContextValue(request, other>0?GetClientUserId(other):0);
+    SteamWorks_SetHTTPRequestContextValue(request, GetClientUserId(client), other>0?GetClientUserId(other):0);
     SteamWorks_SetHTTPCallbacks(request, Callback_OnHTTPResponse);
     return request;
 }
 
-public int Callback_OnHTTPResponse(Handle request, bool bFailure, bool bRequestSuccessful, EHTTPStatusCode eStatusCode, int other)
+public int Callback_OnHTTPResponse(Handle request, bool bFailure, bool bRequestSuccessful, EHTTPStatusCode eStatusCode, int userid, int other)
 {
     if (!bRequestSuccessful || eStatusCode != k_EHTTPStatusCode200OK)
     {        
