@@ -230,7 +230,6 @@ while [[ true ]]; do
                 -nocrashdialog \
                 -authkey "${srcds_authkey}" \
                 -num_edicts 4096 \
-                -tickrate 128 \
                 +con_logfile /dev/stderr \
                 +con_timestamp 1 \
                 +exec $config \
