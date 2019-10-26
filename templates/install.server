@@ -4,6 +4,6 @@
 login anonymous
 
 force_install_dir /root/.steam/SteamApps/common/reactivedrop
-app_update 563560 verify
+app_update 582400 verify
 
 quit
