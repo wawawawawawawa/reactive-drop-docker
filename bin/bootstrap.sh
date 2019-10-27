@@ -229,6 +229,8 @@ while [[ true ]]; do
                 -nocrashdialog \
                 -authkey "${srcds_authkey}" \
                 -threads 1 \
+                -nohltv \
+                -tvdisable 1 \
                 +con_logfile /dev/stderr \
                 +con_timestamp 1 \
                 +exec $config \
