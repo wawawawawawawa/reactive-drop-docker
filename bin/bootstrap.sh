@@ -228,7 +228,6 @@ while [[ true ]]; do
                 -nomessagebox \
                 -nocrashdialog \
                 -authkey "${srcds_authkey}" \
-                -threads 1 \
                 -nohltv \
                 -tvdisable 1 \
                 +con_logfile /dev/stderr \
