@@ -225,11 +225,10 @@ while [[ true ]]; do
                 -game reactivedrop \
                 -autoupdate \
                 -port "${port}" \
-                -threads 1 \
                 -nomessagebox \
                 -nocrashdialog \
                 -authkey "${srcds_authkey}" \
-                -num_edicts 4096 \
+                -threads 1 \
                 +con_logfile /dev/stderr \
                 +con_timestamp 1 \
                 +exec $config \
