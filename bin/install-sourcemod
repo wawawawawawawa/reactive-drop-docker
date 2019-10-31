@@ -5,7 +5,9 @@ set -ex
 mm_base="https://mms.alliedmods.net/mmsdrop/1.10"
 sm_base="https://sm.alliedmods.net/smdrop/1.9/"
 ac_base="https://github.com/Silenci0/SMAC/archive/master.zip"
-geo_url="https://mailfud.org/geoip-legacy/GeoIPCity.dat.gz"
+
+geocountry_url="https://mailfud.org/geoip-legacy/GeoIP.dat.gz"
+geocity_url="https://mailfud.org/geoip-legacy/GeoIPCity.dat.gz"
 
 # sourcebans
 sb_base="https://github.com/sbpp/sourcebans-pp/releases/download"
@@ -30,7 +32,8 @@ unzip -x /tmp/sourcemod.zip
 
 # get geoip
 mkdir -p addons/sourcemod/cfg/geoip
-wget -q -O- "$geo_url" | gzip -d > addons/sourcemod/configs/geoip/GeoIPCity.dat
+wget -q -O- "$geocity_url" | gzip -d > addons/sourcemod/configs/geoip/GeoIPCity.dat
+wget -q -O- "$geocountry_url" | gzip -d > addons/sourcemod/configs/geoip/GeoIP.dat
 
 # get steamworks, required for steam group handling
 wget -q "${sw_base}/SteamWorks-git${sw_version}-windows.zip" -O /tmp/steamworks.zip
