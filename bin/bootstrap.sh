@@ -172,7 +172,7 @@ cd /root/reactivedrop || exit 1
 
 # patch content servers
 #patch_content_servers
-install_steam_client
+#install_steam_client
 
 # compile translator plugin
 compile_sm_translator
