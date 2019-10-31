@@ -1,0 +1,19 @@
+"CountryShow"
+{
+	"messages"
+	{
+		"playerjoin"		"{PLAYERTYPE} {GREEN}{PLAYERNAME} {DEFAULT}<{LIGHTGREEN}{STEAMID}{DEFAULT}> connected from country {GREEN}{PLAYERCOUNTRY} {DEFAULT}({LIGHTGREEN}{PLAYERCOUNTRYSHORT}{DEFAULT}), IP {GREEN}{PLAYERIP}"
+		"playerdisc"		"{PLAYERTYPE} {GREEN}{PLAYERNAME} {DEFAULT}<{LIGHTGREEN}{STEAMID}{DEFAULT}> from country {GREEN}{PLAYERCOUNTRY} {DEFAULT}({LIGHTGREEN}{PLAYERCOUNTRYSHORT}{DEFAULT}) disconnected from IP {GREEN}{PLAYERIP}{GREEN}reason: {DEFAULT}{DISC_REASON}"
+		"randomdisc1"		"If sm_ca_randomdisc = 1 (default), then 'playerdisc' will be used"
+		"randomdisc2"		"If sm_ca_randomdisc >= 2, then the 'randomdiscN' messages will be used instead of 'playerdisc'"
+		"randomdisc3"		"Add as many random messages as the value of sm_ca_randomdisc is (if >= 2), else no message might appear"
+	}
+	"messages_admin"
+	{
+		"playerjoin"		"Colors: {DEFAULT}, {LIGHTGREEN}, {GREEN}, {YELLOW}, {OLIVE}"
+		"playerdisc"		"Placeholders: {PLAYERTYPE}, {PLAYERNAME}, {PLAYERCITY}, {PLAYERREGION}, {PLAYERCOUNTRY}, {PLAYERCOUNTRYSHORT}, {PLAYERCOUNTRYSHORT3}, {PLAYERIP}, {STEAMID}, {DISC_REASON}"
+		"randomdisc1"		"The behaviour is the same as for the public enhanced disconnect messages"
+		"randomdisc2"		"Except that sm_ca_randomdiscadmins needs to be set to 1 for these random messages to appear (default is 0)"
+		"randomdisc3"		"Else if sm_ca_showenhancedadmins = 1 and random public messages are on, admins will only get the 'playerdisc' message, but maybe you want exactly that"
+	}
+}
