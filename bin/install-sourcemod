@@ -69,7 +69,6 @@ done
 # remove other plugins
 rm -rf plugins-available
 
-# TODO: plugins are broken
 # copy the result
 cp -a /tmp/SMAC-master/* /root/reactivedrop/reactivedrop/
 
