@@ -18,7 +18,9 @@ Run: `docker-compose up`
 
 # how to add custom configs
 
-Copy docker-compose.yml to docker-compose.override.yml and make your changes
+Copy docker-compose.yml to docker-compose.override.yml and make your changes. 
+
+Restart the container after that.
 
 # how to customize
 The game is installed in /root/reactivedrop/. You can overwrite any file 
