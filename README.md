@@ -2,6 +2,16 @@
 Reactive Drop server in a docker container
 
 # how to run
+You need Docker
+
+About Docker:
+- https://www.docker.com/resources/what-container
+- https://www.docker.com/products/docker-enterprise
+
+Get Docker:
+- https://www.docker.com/get-started
+- https://docs.docker.com/compose/
+
 Install Docker and Docker-Compose.
 
 Run: `docker-compose up`
