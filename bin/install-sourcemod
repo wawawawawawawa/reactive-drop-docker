@@ -2,8 +2,8 @@
 set -ex
 
 # meta- and sourcemod
-mm_base="https://mms.alliedmods.net/mmsdrop/1.10"
-sm_base="https://sm.alliedmods.net/smdrop/1.9/"
+mm_base="https://mms.alliedmods.net/mmsdrop/1.11"
+sm_base="https://sm.alliedmods.net/smdrop/1.10/"
 ac_base="https://github.com/Silenci0/SMAC/archive/master.zip"
 
 geocountry_url="https://mailfud.org/geoip-legacy/GeoIP.dat.gz"
@@ -54,9 +54,9 @@ modules=(
     "client"
     "commands"
     "cvars"
+    "speedhack"
     #"rcon"
     #"aimbot"
-    #"speedhack"
     #"eyetest"
 )
 
