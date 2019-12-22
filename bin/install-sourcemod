@@ -54,6 +54,7 @@ modules=(
     "client"
     "commands"
     "cvars"
+    "autotrigger"
     "speedhack"
     #"rcon"
     #"aimbot"
