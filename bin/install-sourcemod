@@ -4,7 +4,6 @@ set -ex
 # meta- and sourcemod
 mm_base="https://mms.alliedmods.net/mmsdrop/1.11"
 sm_base="https://sm.alliedmods.net/smdrop/1.10/"
-ac_base="https://github.com/Silenci0/SMAC/archive/master.zip"
 
 geocountry_url="https://mailfud.org/geoip-legacy/GeoIP.dat.gz"
 geocity_url="https://mailfud.org/geoip-legacy/GeoIPCity.dat.gz"
@@ -38,40 +37,6 @@ wget -q -O- "$geocountry_url" | gzip -d > addons/sourcemod/configs/geoip/GeoIP.d
 # get steamworks, required for steam group handling
 wget -q "${sw_base}/SteamWorks-git${sw_version}-windows.zip" -O /tmp/steamworks.zip
 unzip -x /tmp/steamworks.zip
-
-# smac
-wget -q "${ac_base}" -O /tmp/smac.zip
-cd /tmp
-unzip -x /tmp/smac.zip
-cd /tmp/SMAC-master/addons/sourcemod
-
-
-# remove some smac plugins
-mv -f plugins plugins-available
-
-# # enable some of them
-modules=(
-    "client"
-    "commands"
-    "cvars"
-    "autotrigger"
-    "speedhack"
-    #"rcon"
-    #"aimbot"
-    #"eyetest"
-)
-
-mkdir plugins
-mv plugins-available/smac.smx plugins/smac.smx
-for module in "${modules[@]}"; do
-    mv -f plugins-available/smac_$module.smx plugins/smac_$module.smx
-done
-
-# remove other plugins
-rm -rf plugins-available
-
-# copy the result
-cp -a /tmp/SMAC-master/* /root/reactivedrop/reactivedrop/
 
 # get sourcebans
 wget -q "${sb_base}/${sb_version}/sourcebans-pp-${sb_version}.plugin-only.zip" -O /tmp/sourcebans.zip

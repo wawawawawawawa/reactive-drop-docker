@@ -56,6 +56,10 @@ COPY bin/bootstrap.sh /usr/local/bin/bootstrap.sh
 COPY reactivedrop/ /root/reactivedrop/reactivedrop/
 COPY www/index.php /var/www/html/index.php
 
+# install anti cheat
+COPY reactive-drop-anticheat/ /tmp/reactive-drop-anticheat/
+RUN /tmp/reactive-drop-anticheat/bin/install.sh || false
+
 # cache steam client installation
 VOLUME /root/prefix32/drive_c
 

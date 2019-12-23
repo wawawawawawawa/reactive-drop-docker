@@ -133,14 +133,6 @@ function run_steam_client()
   wine ~/prefix32/drive_c/Program\ Files/Steam/Steam.exe
 }
 
-function compile_sm_translator()
-{
-    cd reactivedrop/addons/sourcemod/scripting || exit
-    wine spcomp.exe sm_translator.sp
-    mv -f sm_translator.smx ../plugins
-    cd -
-}
-
 function start_translation_services()
 {
     if [[ "$yandex_translation_api_key" != "" ]]; then
@@ -169,13 +161,6 @@ servers=$(set | grep "^rd\_server\_[0-9]\{1,\}\_port=[0-9]\{4,5\}$")
 
 # switch to reactive drop folder
 cd /root/reactivedrop || exit 1
-
-# patch content servers
-#patch_content_servers
-#install_steam_client
-
-# compile translator plugin
-compile_sm_translator
 
 # remove some leftovers if present
 find ./reactivedrop -name '*.campaignsave' -or -name '*.log' -delete
