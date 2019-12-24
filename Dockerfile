@@ -29,7 +29,6 @@ RUN rm -rf /root/prefix32
 # upgrade wine
 RUN apt install -y --install-recommends winehq-staging:i386
 
-
 # cleanup, enable after we are finished
 RUN apt-get -qq -y autoremove \
     && apt-get -qq -y clean \
@@ -41,24 +40,31 @@ RUN apt-get -qq -y autoremove \
 # link reactive drop for easier usage within scripts
 RUN ln -sf /root/.steam/SteamApps/common/reactivedrop /root/reactivedrop
 
+# winetricks
+RUN cd /usr/local/bin \
+    && wget -q https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks \
+    && chmod +x winetricks \
+    && winetricks --unattended win7
+
 # sourcemod
 COPY bin/install-sourcemod /usr/local/sbin/install-sourcemod
 RUN /usr/local/sbin/install-sourcemod
 
-# winetricks
-RUN cd /usr/local/bin \
-    && wget -q https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks \
-    && chmod +x winetricks
+# sm translator
+COPY reactivedrop/addons/ /root/reactivedrop/reactivedrop/addons/
+COPY bin/compile-sourcemod /usr/local/sbin/compile-sourcemod
+RUN /usr/local/sbin/compile-sourcemod
+
+# install anti cheat
+COPY reactive-drop-anticheat/ /tmp/reactive-drop-anticheat/
+RUN if [ -x /tmp/reactive-drop-anticheat/bin/install.sh ]; then /tmp/reactive-drop-anticheat/bin/install.sh; fi
 
 # copy files
 COPY etc/ /etc/
 COPY bin/bootstrap.sh /usr/local/bin/bootstrap.sh
-COPY reactivedrop/ /root/reactivedrop/reactivedrop/
+COPY reactivedrop/cfg/ /root/reactivedrop/reactivedrop/cfg/
+COPY reactivedrop/addons/sourcemod/configs/ /root/reactivedrop/reactivedrop/addons/sourcemod/configs/
 COPY www/index.php /var/www/html/index.php
-
-# install anti cheat
-COPY reactive-drop-anticheat/ /tmp/reactive-drop-anticheat/
-RUN /tmp/reactive-drop-anticheat/bin/install.sh || false
 
 # cache steam client installation
 VOLUME /root/prefix32/drive_c

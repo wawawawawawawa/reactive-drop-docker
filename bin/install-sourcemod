@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -e
 
 # meta- and sourcemod
 mm_base="https://mms.alliedmods.net/mmsdrop/1.11"
@@ -21,12 +21,12 @@ cd /root/reactivedrop/reactivedrop
 
 # get metamod
 latest=$(wget -q -O- "${mm_base}/mmsource-latest-windows")
-wget -q "${mm_base}/${latest}" -O /tmp/metamod.zip
+wget "${mm_base}/${latest}" -O /tmp/metamod.zip
 unzip -x /tmp/metamod.zip
 
 # get sourcemod
 latest=$(wget -q -O- "${sm_base}/sourcemod-latest-windows")
-wget -q "${sm_base}/${latest}" -O /tmp/sourcemod.zip
+wget "${sm_base}/${latest}" -O /tmp/sourcemod.zip
 unzip -x /tmp/sourcemod.zip
 
 # get geoip
@@ -35,11 +35,11 @@ wget -q -O- "$geocity_url" | gzip -d > addons/sourcemod/configs/geoip/GeoIPCity.
 wget -q -O- "$geocountry_url" | gzip -d > addons/sourcemod/configs/geoip/GeoIP.dat
 
 # get steamworks, required for steam group handling
-wget -q "${sw_base}/SteamWorks-git${sw_version}-windows.zip" -O /tmp/steamworks.zip
+wget "${sw_base}/SteamWorks-git${sw_version}-windows.zip" -O /tmp/steamworks.zip
 unzip -x /tmp/steamworks.zip
 
 # get sourcebans
-wget -q "${sb_base}/${sb_version}/sourcebans-pp-${sb_version}.plugin-only.zip" -O /tmp/sourcebans.zip
+wget "${sb_base}/${sb_version}/sourcebans-pp-${sb_version}.plugin-only.zip" -O /tmp/sourcebans.zip
 cd /tmp
 unzip -x /tmp/sourcebans.zip
 cp -a /tmp/sourcebans-pp-${sb_version}.plugin-only/addons /root/reactivedrop/reactivedrop/

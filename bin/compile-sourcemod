@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+
+# compile sm translator
+cd /root/reactivedrop/reactivedrop/addons/sourcemod/scripting
+DEBUG=-all wine spcomp.exe sm_translator.sp
+mv -f sm_translator.smx ../plugins
