@@ -95,6 +95,7 @@ function write_sourcebans_serverid()
     id=$(set | grep "rd_sourcebans_${nr}_id")
     if [[ "$id" != "" ]]; then
         sed -i'' "s/\-1/${nr}/g" $base/configs/sourcebans/sourcebans.cfg
+        sed -i'' "s#http://www.yourwebsite.net/#https://support.steampowered.com/kb/7849-RADZ-6869/#g" $base/configs/sourcebans/sourcebans.cfg
     fi
 }
 
@@ -214,6 +215,7 @@ while [[ true ]]; do
                 -authkey "${srcds_authkey}" \
                 -nohltv \
                 -tvdisable 1 \
+                -threads 1 \
                 +con_logfile /dev/stderr \
                 +con_timestamp 1 \
                 +exec $config \

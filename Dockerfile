@@ -72,5 +72,8 @@ VOLUME /root/prefix32/drive_c
 # cache workshop folder
 VOLUME /root/.steam/SteamApps/common/reactivedrop/reactivedrop/workshop
 
+# work dir
+WORKDIR /root/reactivedrop/reactivedrop
+
 # start command
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf" ]
