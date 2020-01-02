@@ -62,6 +62,7 @@ RUN if [ -x /tmp/reactive-drop-anticheat/bin/install.sh ]; then /tmp/reactive-dr
 # copy files
 COPY etc/ /etc/
 COPY bin/bootstrap.sh /usr/local/bin/bootstrap.sh
+COPY reactivedrop/bin/ /root/reactivedrop/reactivedrop/bin/
 COPY reactivedrop/cfg/ /root/reactivedrop/reactivedrop/cfg/
 COPY reactivedrop/addons/sourcemod/configs/ /root/reactivedrop/reactivedrop/addons/sourcemod/configs/
 COPY www/index.php /var/www/html/index.php

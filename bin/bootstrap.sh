@@ -147,6 +147,17 @@ function start_translation_services()
     fi
 }
 
+function extract_sourcemod_plugins()
+{
+    # extract source plugins
+    if [[ -d /opt/export ]]; then
+        cp -a /root/reactivedrop/reactivedrop/addons/sourcemod/plugins /opt/export/
+    fi
+}
+
+# extract the sourcemod plugins
+extract_sourcemod_plugins
+
 # start translation api
 start_translation_services
 
@@ -216,6 +227,7 @@ while [[ true ]]; do
                 -nohltv \
                 -tvdisable 1 \
                 -threads 1 \
+                -tickrate 100 \
                 +con_logfile /dev/stderr \
                 +con_timestamp 1 \
                 +exec $config \
