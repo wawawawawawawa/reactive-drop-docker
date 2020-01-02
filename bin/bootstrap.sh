@@ -227,7 +227,6 @@ while [[ true ]]; do
                 -nohltv \
                 -tvdisable 1 \
                 -threads 1 \
-                -tickrate 100 \
                 +con_logfile /dev/stderr \
                 +con_timestamp 1 \
                 +exec $config \
