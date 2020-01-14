@@ -221,8 +221,6 @@ while [[ true ]]; do
                 -game reactivedrop \
                 -autoupdate \
                 -port "${port}" \
-                -nomessagebox \
-                -nocrashdialog \
                 -authkey "${srcds_authkey}" \
                 -nohltv \
                 -tvdisable 1 \
