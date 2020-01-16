@@ -8,6 +8,9 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - run:
+          name: Connect to Docker Hub
+          command: docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
       - restore_cache:
           keys:
             - v2-{{ .Branch }}
@@ -16,7 +19,7 @@ jobs:
       - run:
           name: Build images
           command: |
-            build/container release
+            build/container release --push
       - save_cache:
           key: v2-{{ .Branch }}
           paths:
@@ -31,9 +34,12 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
+          name: Connect to Docker Hub
+          command: docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+      - run:
           name: Build images
           command: |
-            build/container all
+            build/container all --push
 
 # workflow for this project
 workflows:
@@ -44,5 +50,6 @@ workflows:
           context: build
       - rebuild:
           type: approval
+          context: build
           requires:
             - build
