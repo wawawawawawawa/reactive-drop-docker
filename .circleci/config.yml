@@ -27,11 +27,6 @@ jobs:
             set +o pipefail
             docker load -i /tmp/caches/app.tar | true
       - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /tmp/caches/app.tar | true
-      - run:
           name: Build images
           command: |
             build/container release --push
@@ -39,7 +34,7 @@ jobs:
           name: Save Docker image layer cache
           command: |
             mkdir -p /tmp/caches
-            docker save -o /tmp/caches/app.tar mithrand0/reactive-drop-anticheat
+            docker save -o /tmp/caches/app.tar mithrand0/reactive-drop-server
       - save_cache:
           key: v1-docker-layers-{{ .Branch }}
           paths:
