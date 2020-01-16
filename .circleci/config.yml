@@ -12,16 +12,24 @@ jobs:
           keys:
             - v1-{{ .Branch }}
           paths:
-            - /caches/app.tar
+            - /tmp/caches/app.tar
       - run:
           name: Load Docker image layer cache
           command: |
             set +o pipefail
             docker load -i /caches/app.tar | true
       - run:
-          name: Build application Docker image
+          name: Build steam image
           command: |
-            build/container all
+            build/container steam
+      - run:
+          name: Build game base image
+          command: |
+            build/container game
+      - run:
+          name: Build server image
+          command: |
+            build/container release
       - run:
           name: Save Docker image layer cache
           command: |
@@ -30,7 +38,7 @@ jobs:
       - save_cache:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
-            - /caches/app.tar
+            - /tmp//caches/app.tar
 #      - deploy:
 #          name: Push application Docker image
 #          command: |
