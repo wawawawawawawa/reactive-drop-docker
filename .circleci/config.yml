@@ -10,14 +10,9 @@ jobs:
       - setup_remote_docker
       - restore_cache:
           keys:
-            - v1-{{ .Branch }}
+            - v2-{{ .Branch }}
           paths:
-            - /tmp/caches/app.tar
-      - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /caches/app.tar | true
+            - .last-build-version
       - run:
           name: Build steam image
           command: |
@@ -30,21 +25,7 @@ jobs:
           name: Build server image
           command: |
             build/container release
-      - run:
-          name: Save Docker image layer cache
-          command: |
-            mkdir -p /tmp/caches
-            docker save -o /caches/app.tar release
       - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
+          key: v2-{{ .Branch }}
           paths:
-            - /tmp/caches/app.tar
-#      - deploy:
-#          name: Push application Docker image
-#          command: |
-#            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-#              login="$(aws ecr get-login)"
-#              ${login}
-#              docker tag app "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
-#              docker push "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
-#            fi
+            - .last-build-version
