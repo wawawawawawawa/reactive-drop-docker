@@ -2,6 +2,7 @@ version: 2.1
 jobs:
   build:
     working_directory: ~/repo
+    resource_class: small
     docker:
       - image: circleci/buildpack-deps:stable
     steps:
