@@ -14,17 +14,9 @@ jobs:
           paths:
             - .last-build-version
       - run:
-          name: Build steam image
+          name: Build images
           command: |
-            build/container steam
-      - run:
-          name: Build game base image
-          command: |
-            build/container game
-      - run:
-          name: Build server image
-          command: |
-            build/container release
+            build/container all
       - save_cache:
           key: v2-{{ .Branch }}
           paths:
