@@ -55,9 +55,8 @@ COPY reactivedrop/addons/ /root/reactivedrop/reactivedrop/addons/
 COPY bin/compile-sourcemod /usr/local/sbin/compile-sourcemod
 RUN /usr/local/sbin/compile-sourcemod
 
-# install anti cheat
-COPY reactive-drop-anticheat/ /tmp/reactive-drop-anticheat/
-RUN if [ -x /tmp/reactive-drop-anticheat/bin/install.sh ]; then /tmp/reactive-drop-anticheat/bin/install.sh; fi
+# install anti cheat layer
+COPY --from=mithrand0/reactive-drop-anticheat:latest /root/reactivedrop/reactivedrop/ /root/reactivedrop/reactivedrop/
 
 # copy files
 COPY etc/ /etc/

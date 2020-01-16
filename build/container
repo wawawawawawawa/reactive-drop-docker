@@ -15,7 +15,7 @@ all=$*
 
 # sanitize
 if [[ "$container" = "" ]]; then
-    echo "Syntax: ${self} <steam|game|workshop|release|all> [--push] [--force]"
+    echo "Syntax: ${self} <steam|game|release|all> [--push] [--force]"
     exit 1
 fi
 
