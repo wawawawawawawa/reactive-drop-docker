@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /repo
     docker:
-      - image: docker
+      - image: circleci/buildpack-deps:stable
     steps:
       - checkout
       - setup_remote_docker
