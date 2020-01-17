@@ -16,29 +16,10 @@ jobs:
             - v1-last-build-{{ .Branch }}
           paths:
             - .last-build-version
-      - restore_cache:
-          keys:
-            - v2-docker-layers-{{ .Branch }}
-          paths:
-            - /tmp/caches/app.tar
-      - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /tmp/caches/app.tar | true
       - run:
           name: Build images
           command: |
             build/container release --push
-      - run:
-          name: Save Docker image layer cache
-          command: |
-            mkdir -p /tmp/caches
-            docker save -o /tmp/caches/app.tar mithrand0/reactive-drop-server:latest
-      - save_cache:
-          key: v2-docker-layers-{{ .Branch }}
-          paths:
-            - /tmp/caches/app.tar
       - save_cache:
           key: v1-last-build-{{ .Branch }}
           paths:
