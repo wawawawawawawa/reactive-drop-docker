@@ -5,12 +5,11 @@ Reactive Drop server in a docker container
 [![CircleCI](https://circleci.com/gh/mithrand0/reactive-drop-docker.svg?style=svg)](https://circleci.com/gh/mithrand0/reactive-drop-docker)
 
 # what is included
-- up to date reactive drop installation
-- installation finetuned for performance
-- remote vnc management
-- reactive drop auto updater
+- reactive drop installation, finetuned for performance
 - workshop support
-- sourcemod installation
+- automatic updates, for both game as workshop
+- remote management over http/vnc
+- bundled sourcemod installation
 - easy sourcemod admin configuration
 - chat auto translator (requires api key)
 - anti cheat!
