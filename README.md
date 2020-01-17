@@ -4,6 +4,9 @@ Reactive Drop server in a docker container
 # last build status
 [![CircleCI](https://circleci.com/gh/mithrand0/reactive-drop-docker.svg?style=svg)](https://circleci.com/gh/mithrand0/reactive-drop-docker)
 
+# what does it run on
+This container does not require a Windows installation to run. It runs on windows, linux, macosx, even without gui.
+
 # what is included
 - reactive drop installation, finetuned for performance
 - workshop support
