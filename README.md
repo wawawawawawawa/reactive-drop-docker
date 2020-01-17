@@ -1,6 +1,9 @@
 # reactive-drop-docker
 Reactive Drop server in a docker container
 
+# last build status
+[![CircleCI](https://circleci.com/gh/mithrand0/reactive-drop-docker.svg?style=svg)](https://circleci.com/gh/mithrand0/reactive-drop-docker)
+
 # how to run
 You need Docker
 
