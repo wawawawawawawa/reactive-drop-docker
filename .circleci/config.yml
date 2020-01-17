@@ -18,7 +18,7 @@ jobs:
             - .last-build-version
       - restore_cache:
           keys:
-            - v1-docker-layers-{{ .Branch }}
+            - v2-docker-layers-{{ .Branch }}
           paths:
             - /tmp/caches/app.tar
       - run:
@@ -34,9 +34,9 @@ jobs:
           name: Save Docker image layer cache
           command: |
             mkdir -p /tmp/caches
-            docker save -o /tmp/caches/app.tar mithrand0/reactive-drop-server
+            docker save -o /tmp/caches/app.tar mithrand0/reactive-drop-server:latest
       - save_cache:
-          key: v1-docker-layers-{{ .Branch }}
+          key: v2-docker-layers-{{ .Branch }}
           paths:
             - /tmp/caches/app.tar
       - save_cache:
