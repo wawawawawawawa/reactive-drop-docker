@@ -81,6 +81,7 @@ case $container in
     all)
         build_container steam
         build_container game
+        build_container server
         build_container release
     ;;
     *)
