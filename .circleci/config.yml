@@ -24,21 +24,6 @@ jobs:
           key: v1-last-build-{{ .Branch }}
           paths:
             - .last-build-version
-  rebuild:
-    working_directory: ~/repo
-    resource_class: small
-    docker:
-      - image: circleci/buildpack-deps:stable
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Connect to Docker Hub
-          command: docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
-      - run:
-          name: Build images
-          command: |
-            build/container all --push
 
 # workflow for this project
 workflows:
@@ -47,8 +32,3 @@ workflows:
     jobs:
       - build:
           context: build
-      - rebuild:
-          type: approval
-          context: build
-          requires:
-            - build
