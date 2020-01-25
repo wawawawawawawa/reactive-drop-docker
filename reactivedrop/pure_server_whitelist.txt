@@ -1,0 +1,7 @@
+whitelist
+{
+    bin\client.dll              allow_from_disk+check_crc
+    bin\missionchooser.dll      allow_from_disk+check_crc
+    bin\matchmaking.dll         allow_from_disk+check_crc
+    bin\matchmaking_ds.dll      allow_from_disk+check_crc
+}

@@ -19,6 +19,7 @@ COPY etc/ /etc/
 COPY bin/bootstrap.sh /usr/local/bin/bootstrap.sh
 COPY reactivedrop/bin/ /root/reactivedrop/reactivedrop/bin/
 COPY reactivedrop/cfg/ /root/reactivedrop/reactivedrop/cfg/
+COPY reactivedrop/pure_server_whitelist.txt /root/reactivedrop/reactivedrop/pure_server_whitelist.txt
 COPY reactivedrop/addons/sourcemod/configs/ /root/reactivedrop/reactivedrop/addons/sourcemod/configs/
 COPY www/index.php /var/www/html/index.php
 
