@@ -1,15 +1,15 @@
 whitelist
 {
-    bin\client.dll              allow_from_disk+check_crc
-    bin\missionchooser.dll      allow_from_disk+check_crc
-    bin\matchmaking.dll         allow_from_disk+check_crc
-    bin\matchmaking_ds.dll      allow_from_disk+check_crc
+	bin\client.dll              allow_from_disk+check_crc
+	bin\missionchooser.dll      allow_from_disk+check_crc
+	bin\matchmaking.dll         allow_from_disk+check_crc
+	bin\matchmaking_ds.dll      allow_from_disk+check_crc
 
 	// By default, when in pure server mode, most content file types are only allowed to come from Steam.
 	materials\...		        from_steam
 	models\...			        from_steam
-    scripts\...                 from_steam
-    resource\...                from_steam
+	scripts\...                 from_steam
+	resource\...                from_steam
 
 	// Allow custom player models. Don't do CRC checks on them because the clients may all
 	// have different custom models and the server won't have them all.    
@@ -21,6 +21,6 @@ whitelist
 	materials\vgui\logos\...	allow_from_disk
 	materials\vgui\logos\ui\...	allow_from_disk
     
-    // Allow replay browser thumbnails.
-    materials\vgui\replay\thumbnails\...   allow_from_disk
+	// Allow replay browser thumbnails.
+	materials\vgui\replay\thumbnails\...   allow_from_disk
 }
