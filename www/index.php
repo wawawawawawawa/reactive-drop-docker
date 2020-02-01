@@ -56,9 +56,8 @@ class Translation
 
     private function fetchTranslation($lang)
     {
-        $lag = sprintf('/\b%s\b/i', preg_quote($lang, '/');
-        if (preg_match($lag, $this->text)) {
-            $this->text = "No, it's only you"
+        if (preg_match('/\b(lag)|(lagging)|(lags)\b', $this->text)) {
+            $this->text = "No lag, it's only you";
         }
                        
         $uri = sprintf(
