@@ -56,6 +56,11 @@ class Translation
 
     private function fetchTranslation($lang)
     {
+        $lag = sprintf('/\b%s\b/i', preg_quote($lang, '/');
+        if (preg_match($lag, $this->text)) {
+            $this->text = "No, it's only you"
+        }
+                       
         $uri = sprintf(
             'https://translate.yandex.net/api/v1.5/tr.json/translate?key=%s&text=%s&lang=%s',
             $this->getApiKey(),
